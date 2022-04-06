@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
               return const HomePage();
             }),);
           },
-          child: const Text("Login"),
+          child: const Text("MAasuk"),
         ),
       ),
     );
