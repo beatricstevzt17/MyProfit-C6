@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:aplikasi/app/screen/home/home.dart';
+import 'package:aplikasi/app/screen/register/register.dart';
+import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -7,14 +11,115 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const HomePage();
-            }),);
-          },
-          child: const Text("MAasuk"),
+      backgroundColor: Color.fromARGB(255, 0, 255, 170),
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('LOGIN',
+                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
+              Text(
+                'Login To Your Account',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(height: 60),
+              Container(
+                margin: const EdgeInsets.only(top: 15, bottom: 15),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Color.fromRGBO(90, 108, 234, 0.07),
+                      blurRadius: 50,
+                      spreadRadius: 0,
+                      offset: Offset(12, 26))
+                ]),
+                child: TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: borderRadius1,
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'example@gmail.com',
+                    labelText: 'Email',
+                    prefixIcon: Icon(
+                      Icons.mail,
+                      color: color1,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 15, bottom: 15),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Color.fromRGBO(90, 108, 234, 0.07),
+                      blurRadius: 50,
+                      spreadRadius: 0,
+                      offset: Offset(12, 26))
+                ]),
+                child: TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: borderRadius1,
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'password123',
+                    labelText: 'Password',
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: color1,
+                    ),
+                    suffixIcon: Icon(
+                      Icons.remove_red_eye,
+                      color: color1,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius1,
+                    color: color1,
+                    boxShadow: [boxshadow1]),
+                child: TextButton(
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {}),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return register();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'create account',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
+                  ))
+            ],
+          ),
         ),
       ),
     );

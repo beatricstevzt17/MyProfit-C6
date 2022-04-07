@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:aplikasi/halaman_utama.dart';
 import 'app/screen/login/login.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginPage(),
+      home: halamanutama(),
     );
   }
 }
