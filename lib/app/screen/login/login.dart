@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,17 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return const HariPage();
+                        },
+                      ),
+                    );
+
+                    }),
               ),
               TextButton(
                   onPressed: () {
