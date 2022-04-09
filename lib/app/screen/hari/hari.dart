@@ -55,7 +55,7 @@ class _HariPageState extends State<HariPage> {
                         child: Text(
                       "${data[index]["hari"]} ${data[index]["tanggal"]}}",
                       style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.w600),
                     )),
