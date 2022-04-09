@@ -1,33 +1,39 @@
-import 'dart:developer';
-
-import 'package:aplikasi/app/screen/home/home.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool isVisible = false;
+  final TextEditingController _emailC = TextEditingController();
+  final TextEditingController _passC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 255, 170),
+      backgroundColor: const Color(0xFF9AD0EC),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('LOGIN',
+              const Text('LOGIN',
                   style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
-              Text(
+              const Text(
                 'Login To Your Account',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 60),
+              const SizedBox(height: 60),
               Container(
                 margin: const EdgeInsets.only(top: 15, bottom: 15),
-                decoration: BoxDecoration(boxShadow: [
+                decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                       color: Color.fromRGBO(90, 108, 234, 0.07),
                       blurRadius: 50,
@@ -35,10 +41,11 @@ class LoginPage extends StatelessWidget {
                       offset: Offset(12, 26))
                 ]),
                 child: TextField(
+                  controller: _emailC,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: borderRadius1,
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                     fillColor: Colors.white,
                     filled: true,
@@ -55,7 +62,7 @@ class LoginPage extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 15, bottom: 15),
-                decoration: BoxDecoration(boxShadow: [
+                decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                       color: Color.fromRGBO(90, 108, 234, 0.07),
                       blurRadius: 50,
@@ -63,10 +70,12 @@ class LoginPage extends StatelessWidget {
                       offset: Offset(12, 26))
                 ]),
                 child: TextField(
+                  controller: _passC,
+                  obscureText: isVisible ? false : true,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: borderRadius1,
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                     fillColor: Colors.white,
                     filled: true,
@@ -76,8 +85,13 @@ class LoginPage extends StatelessWidget {
                       Icons.lock,
                       color: color1,
                     ),
-                    suffixIcon: Icon(
-                      Icons.remove_red_eye,
+                    suffixIcon: IconButton(
+                      icon: isVisible
+                          ? const Icon(Icons.remove_red_eye)
+                          : const Icon(Icons.visibility_off),
+                      onPressed: () => setState(() {
+                        isVisible = !isVisible;
+                      }),
                       color: color1,
                     ),
                     border: OutlineInputBorder(
@@ -106,12 +120,12 @@ class LoginPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) {
-                          return register();
+                          return const RegisterPage();
                         },
                       ),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'create account',
                     style: TextStyle(
                         fontSize: 14,

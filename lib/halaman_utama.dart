@@ -4,8 +4,8 @@ import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:flutter/material.dart';
 
-class halamanutama extends StatelessWidget {
-  const halamanutama({Key? key}) : super(key: key);
+class HalamanUtama extends StatelessWidget {
+  const HalamanUtama({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class halamanutama extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) {
-                          return register();
+                          return RegisterPage();
                         },
                       ),
                     );
