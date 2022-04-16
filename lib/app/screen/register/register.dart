@@ -1,3 +1,5 @@
+import 'package:aplikasi/app/screen/bulan/bulan.dart';
+import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
@@ -155,7 +157,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Create Account',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {},
+                 onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return const BulanPage();
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
               TextButton(

@@ -20,6 +20,7 @@ class _TambahPageState extends State<TambahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF9AD0EC),
         title: const Text("Laporan Penjualan"),
       ),
       body: ListView(
@@ -174,14 +175,18 @@ class _TambahPageState extends State<TambahPage> {
                   height: 60,
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) {
                         return const HariPage();
-                      }));
-                    },
-                    child: const Text('Tambah Data',
-                        style: TextStyle(fontSize: 16, color: Colors.black)))
+                      }),
+                    );
+                  },
+                  child: const Text(
+                    'Tambah Data',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                )
               ],
             ),
           ),
