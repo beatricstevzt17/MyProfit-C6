@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:flutter/material.dart';
 
 //memanggil kerangka bulan :
@@ -28,8 +29,14 @@ class Bulan extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: (() {}),
+          onTap: (() => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const HariPage(),
+                ),
+              )),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               //1) konten ke 1 : ROW (icon & text bulan)
               Row(
@@ -40,11 +47,20 @@ class Bulan extends StatelessWidget {
                     child: Image.asset("assets/icons/calendar.png"),
                   ),
                   //b) text bulan
-                  Text(content.bulan)
+                  Text(
+                    content.bulan,
+                    style: const TextStyle(fontSize: 20),
+                  )
                 ],
               ),
+              //2) konten 2 : icon delete
+              Transform.scale(
+                scale: 0.7,
+                child: IconButton(
+                    onPressed: () {},
+                    icon: Image.asset("assets/icons/delete.png")),
+              ),
             ],
-            //2) konten 2 : icon X
           ),
         ),
       ),

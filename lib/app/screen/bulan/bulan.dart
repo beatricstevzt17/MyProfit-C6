@@ -18,11 +18,11 @@ class BulanPage extends StatefulWidget {
 
 class _BulanPageState extends State<BulanPage> {
   final List<BulanContent> bulancontent = [
-    BulanContent(bulan: "Maret", tahun: "2022"),
-    BulanContent(bulan: "April", tahun: "2022"),
-    BulanContent(bulan: "Mei", tahun: "2022"),
-    BulanContent(bulan: "Juni", tahun: "2022"),
-    BulanContent(bulan: "Juli", tahun: "2022"),
+    BulanContent(bulan: "Maret 2022"),
+    BulanContent(bulan: "April 2022"),
+    BulanContent(bulan: "Mei 2022"),
+    BulanContent(bulan: "Juni 2022"),
+    BulanContent(bulan: "Juli 2022"),
   ];
 
   @override
@@ -34,7 +34,11 @@ class _BulanPageState extends State<BulanPage> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const TambahBulan())),
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const TambahBulan(),
+                ),
+              ),
           child: const Icon(Icons.add)),
       body: Center(
         child: ListView.builder(
