@@ -1,14 +1,15 @@
-import 'package:aplikasi/app/models/hari_models.dart';
-import 'package:aplikasi/app/screen/hari/ubah_page.dart';
+import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:flutter/material.dart';
 
-//memanggil kerangka hari :
-// import '../bulan.dart';
+//memanggil kerangka bulan :
+import '../bulan.dart';
 
-class Hari extends StatelessWidget {
-  const Hari({required this.content, Key? key}) : super(key: key);
+import '../../../models/bulan_models.dart';
 
-  final HariContent content;
+class Bulan extends StatelessWidget {
+  const Bulan({required this.content, Key? key}) : super(key: key);
+
+  final BulanContent content;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class Hari extends StatelessWidget {
           onTap: (() => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const UbahPage(),
+                  builder: (_) => const HariPage(),
                 ),
               )),
           child: Row(
@@ -43,11 +44,11 @@ class Hari extends StatelessWidget {
                   //a) Icon
                   Transform.scale(
                     scale: 0.5,
-                    child: Image.asset("assets/icons/dollar.png"),
+                    child: Image.asset("assets/icons/calendar.png"),
                   ),
                   //b) text bulan
                   Text(
-                    content.tanggal,
+                    content.bulan,
                     style: const TextStyle(fontSize: 20),
                   )
                 ],
