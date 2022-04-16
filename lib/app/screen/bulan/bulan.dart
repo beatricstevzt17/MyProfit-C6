@@ -39,7 +39,7 @@ class _BulanPageState extends State<BulanPage> {
       body: Center(
         child: ListView.builder(
           itemCount: bulancontent.length,
-          itemBuilder: (context, index) => Bulan(index: index),
+          itemBuilder: (context, index) => Bulan(content: bulancontent[index]),
         ),
       ),
     );

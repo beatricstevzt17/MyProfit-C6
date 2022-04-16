@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 //memanggil kerangka bulan :
+import '../bulan.dart';
+
+import '../../../models/bulan_models.dart';
 
 class Bulan extends StatelessWidget {
-  const Bulan({required this.index, Key? key}) : super(key: key);
+  const Bulan({required this.content, Key? key}) : super(key: key);
 
-  final int index;
+  final BulanContent content;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       width: MediaQuery.of(context).size.width * 1,
-      height: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * 0.08,
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -24,13 +28,23 @@ class Bulan extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          onTap: (() {}),
           child: Row(
             children: <Widget>[
-              //konten ke 1 : ROW (icon & text bulan)
+              //1) konten ke 1 : ROW (icon & text bulan)
               Row(
-                children: <Widget>[],
-              )
+                children: <Widget>[
+                  //a) Icon
+                  Transform.scale(
+                    scale: 0.5,
+                    child: Image.asset("assets/icons/calendar.png"),
+                  ),
+                  //b) text bulan
+                  Text(content.bulan)
+                ],
+              ),
             ],
+            //2) konten 2 : icon X
           ),
         ),
       ),

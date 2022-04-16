@@ -16,11 +16,11 @@ class HalamanUtama extends StatelessWidget {
         body: SafeArea(
             child: Column(
           children: [
-            const SizedBox(height: 150),
-            // Transform.scale(
-            //           scale: 0.7,
-            //           child: Image.asset("assets/icons/salary.png"),
-            //         ),
+            const SizedBox(height: 120),
+            Transform.scale(
+              scale: 0.5,
+              child: Image.asset("assets/icons/salary.png"),
+            ),
             const SizedBox(height: 100),
             Container(
               padding: const EdgeInsets.all(15),
