@@ -53,7 +53,7 @@ class _HariPageState extends State<HariPage> {
                     },
                     child: Center(
                         child: Text(
-                      "${data[index]["hari"]} ${data[index]["tanggal"]}}",
+                      "${data[index]["hari"]} ${data[index]["tanggal"]}",
                       style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -67,5 +67,3 @@ class _HariPageState extends State<HariPage> {
     );
   }
 }
-
-//hallo
