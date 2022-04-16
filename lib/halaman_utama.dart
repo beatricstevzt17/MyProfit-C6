@@ -12,17 +12,16 @@ class HalamanUtama extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 0, 255, 191),
+        backgroundColor: const Color(0xFF9AD0EC),
         body: SafeArea(
             child: Column(
           children: [
-            SizedBox(height: 150),
-            Container(
-                child: Image.asset(
-              'assets/images/....png',
-              height: 150,
-            )),
-            SizedBox(height: 100),
+            const SizedBox(height: 150),
+            // Transform.scale(
+            //           scale: 0.7,
+            //           child: Image.asset("assets/icons/salary.png"),
+            //         ),
+            const SizedBox(height: 100),
             Container(
               padding: const EdgeInsets.all(15),
               child: ElevatedButton(
@@ -31,17 +30,17 @@ class HalamanUtama extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) {
-                          return LoginPage();
+                          return const LoginPage();
                         },
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 50),
+                      minimumSize: const Size(300, 50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
-                      primary: Color.fromARGB(255, 16, 166, 204)),
-                  child: Text(
+                      primary: const Color.fromARGB(255, 16, 166, 204)),
+                  child: const Text(
                     "LOG IN",
                     style: TextStyle(fontSize: 30, fontFamily: "Poppins"),
                   )),
