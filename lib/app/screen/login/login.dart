@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/style/style.dart';
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       MaterialPageRoute(
                         builder: (_) {
-                          return const HariPage();
+                          return const BulanPage();
                         },
                       ),
                     );

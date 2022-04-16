@@ -1,4 +1,6 @@
+import 'package:aplikasi/app/models/hari_models.dart';
 import 'package:aplikasi/app/screen/hari/ubah_page.dart';
+import 'package:aplikasi/app/screen/hari/widgets/hari_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'tambah_page.dart';
@@ -11,17 +13,18 @@ class HariPage extends StatefulWidget {
 }
 
 class _HariPageState extends State<HariPage> {
-  List<Map<String, dynamic>> data = [
-    {"hari": "Rabu", "tanggal": "26/3/2022"},
-    {"hari": "Kamis", "tanggal": "23/2/2022"},
-    {"hari": "Senin", "tanggal": "20/2/2022"},
-    {"hari": "Minggu", "tanggal": "20/1/2022"},
+  final List<HariContent> haricontent = [
+    HariContent(tanggal: "Senin, 11/04/202"),
+    HariContent(tanggal: "Selasa, 12/04/2022"),
+    HariContent(tanggal: "Rabu, 13/04/2022"),
+    HariContent(tanggal: "Kamis, 14/04/2022"),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF9AD0EC),
         title: const Text("Laporan Penjualan perhari"),
       ),
       floatingActionButton: FloatingActionButton(
@@ -30,39 +33,9 @@ class _HariPageState extends State<HariPage> {
           child: const Icon(Icons.add)),
       body: Center(
         child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (_, index) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 15),
-                width: 350,
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: const Color(0xFF9AD0EC),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    splashColor: const Color(0xFFD6E5FA),
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const UbahPage();
-                      }));
-                    },
-                    child: Center(
-                        child: Text(
-                      "${data[index]["hari"]} ${data[index]["tanggal"]}",
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
-                    )),
-                  ),
-                ),
-              );
-            }),
+          itemCount: haricontent.length,
+          itemBuilder: (context, index) => Hari(content: haricontent[index]),
+        ),
       ),
     );
   }
