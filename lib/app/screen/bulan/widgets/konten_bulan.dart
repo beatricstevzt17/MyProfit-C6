@@ -1,15 +1,14 @@
+import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:flutter/material.dart';
 
 //memanggil kerangka bulan :
-import '../bulan.dart';
-
-import '../../../models/bulan_models.dart';
+import 'package:intl/intl.dart';
 
 class Bulan extends StatelessWidget {
   const Bulan({required this.content, Key? key}) : super(key: key);
 
-  final BulanContent content;
+  final RekapModel content;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class Bulan extends StatelessWidget {
           onTap: (() => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const HariPage(),
+                  builder: (_) => HariPage(harian: content.dataHarian, idRekap: content.idRekap),
                 ),
               )),
           child: Row(
@@ -48,7 +47,7 @@ class Bulan extends StatelessWidget {
                   ),
                   //b) text bulan
                   Text(
-                    content.bulan,
+                    DateFormat("MMM yyyy").format(content.tanggal),
                     style: const TextStyle(fontSize: 20),
                   )
                 ],

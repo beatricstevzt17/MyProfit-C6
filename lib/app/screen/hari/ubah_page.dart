@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'hari.dart';
 
 class UbahPage extends StatefulWidget {
   const UbahPage({Key? key}) : super(key: key);
@@ -170,10 +169,7 @@ class _UbahPageState extends State<UbahPage> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (_) {
-                          return const HariPage();
-                        }));
+                        Navigator.pop(context);
                       },
                       child: const Text('Ubah Data',
                           style: TextStyle(fontSize: 16, color: Colors.black)))
