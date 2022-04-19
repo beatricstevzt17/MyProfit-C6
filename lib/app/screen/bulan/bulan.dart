@@ -1,10 +1,6 @@
+import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/app/screen/bulan/tambahbulan.dart';
-import 'package:aplikasi/app/screen/hari/hari.dart';
-import 'package:aplikasi/app/screen/hari/ubah_page.dart';
-
-//Models :
-import 'package:aplikasi/app/models/bulan_models.dart';
 
 //utk konten Bulan
 import 'package:aplikasi/app/screen/bulan/widgets/konten_bulan.dart';
@@ -17,13 +13,7 @@ class BulanPage extends StatefulWidget {
 }
 
 class _BulanPageState extends State<BulanPage> {
-  final List<BulanContent> bulancontent = [
-    BulanContent(bulan: "Maret 2022"),
-    BulanContent(bulan: "April 2022"),
-    BulanContent(bulan: "Mei 2022"),
-    BulanContent(bulan: "Juni 2022"),
-    BulanContent(bulan: "Juli 2022"),
-  ];
+  RekapController rekap = RekapController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +21,16 @@ class _BulanPageState extends State<BulanPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF9AD0EC),
         title: const Text("Data Perbulan"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                rekap.getRekapBulan();
+              });
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.push(
@@ -41,9 +41,22 @@ class _BulanPageState extends State<BulanPage> {
               ),
           child: const Icon(Icons.add)),
       body: Center(
-        child: ListView.builder(
-          itemCount: bulancontent.length,
-          itemBuilder: (context, index) => Bulan(content: bulancontent[index]),
+        child: FutureBuilder(
+          future: rekap.getRekapBulan(),
+          builder: (_, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              final data = rekap.dataRekap;
+              return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (_, index) {
+                  return Bulan(content: data[index]);
+                },
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );

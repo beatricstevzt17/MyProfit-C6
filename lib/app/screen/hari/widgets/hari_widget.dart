@@ -1,6 +1,7 @@
-import 'package:aplikasi/app/models/hari_models.dart';
+import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/hari/ubah_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 //memanggil kerangka hari :
 // import '../bulan.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 class Hari extends StatelessWidget {
   const Hari({required this.content, Key? key}) : super(key: key);
 
-  final HariContent content;
+  final DataHarian content;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class Hari extends StatelessWidget {
                   ),
                   //b) text bulan
                   Text(
-                    content.tanggal,
+                    DateFormat("EEEE, dd MM yyyy").format(content.tanggalBuat),
                     style: const TextStyle(fontSize: 20),
                   )
                 ],

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:flutter/material.dart';
@@ -14,63 +12,74 @@ class HalamanUtama extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xFF9AD0EC),
         body: SafeArea(
-            child: Column(
-          children: [
-            const SizedBox(height: 120),
-            Transform.scale(
-              scale: 0.5,
-              child: Image.asset("assets/icons/salary.png"),
-            ),
-            const SizedBox(height: 100),
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const LoginPage();
+            child: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              const SizedBox(height: 120),
+              Align(
+                alignment: const Alignment(0, -0.5),
+                child: Transform.scale(
+                  scale: 0.5,
+                  child: Image.asset("assets/icons/salary.png"),
+                ),
+              ),
+              const SizedBox(height: 100),
+              Align(
+                alignment: const Alignment(0, 0.8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const LoginPage();
+                              },
+                            ),
+                          );
                         },
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      primary: const Color.fromARGB(255, 16, 166, 204)),
-                  child: const Text(
-                    "LOG IN",
-                    style: TextStyle(fontSize: 30, fontFamily: "Poppins"),
-                  )),
-            ),
-            Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return RegisterPage();
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            primary: const Color.fromARGB(255, 16, 166, 204)),
+                        child: const Text(
+                          "LOG IN",
+                          style: TextStyle(fontSize: 30, fontFamily: "Poppins"),
+                        )),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const RegisterPage();
+                              },
+                            ),
+                          );
                         },
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      primary: Color.fromARGB(255, 255, 255, 255)),
-                  child: Text(
-                    "SIGN IN",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: "Poppins",
-                        color: Color.fromARGB(255, 30, 187, 221)),
-                  )),
-            )
-          ],
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(300, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            primary: const Color.fromARGB(255, 255, 255, 255)),
+                        child: const Text(
+                          "REGISTER",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: "Poppins",
+                              color: Color.fromARGB(255, 30, 187, 221)),
+                        )),
+                  ],
+                ),
+              )
+            ],
+          ),
         )),
       ),
     );
