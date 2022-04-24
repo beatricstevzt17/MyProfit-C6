@@ -1,24 +1,16 @@
-import 'package:aplikasi/app/models/hari_models.dart';
-import 'package:aplikasi/app/screen/hari/ubah_page.dart';
+import 'package:aplikasi/app/controllers/rekap_controller.dart';
+import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/hari/widgets/hari_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'tambah_page.dart';
 
-class HariPage extends StatefulWidget {
-  const HariPage({Key? key}) : super(key: key);
+class HariPage extends StatelessWidget {
+  const HariPage({Key? key, this.harian, required this.idRekap})
+      : super(key: key);
 
-  @override
-  State<HariPage> createState() => _HariPageState();
-}
-
-class _HariPageState extends State<HariPage> {
-  final List<HariContent> haricontent = [
-    HariContent(tanggal: "Senin, 11/04/202"),
-    HariContent(tanggal: "Selasa, 12/04/2022"),
-    HariContent(tanggal: "Rabu, 13/04/2022"),
-    HariContent(tanggal: "Kamis, 14/04/2022"),
-  ];
+  final List<DataHarian>? harian;
+  final String idRekap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +19,23 @@ class _HariPageState extends State<HariPage> {
         backgroundColor: const Color(0xFF9AD0EC),
         title: const Text("Laporan Penjualan perhari"),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const TambahPage())),
-          child: const Icon(Icons.add)),
-      body: Center(
-        child: ListView.builder(
-          itemCount: haricontent.length,
-          itemBuilder: (context, index) => Hari(content: haricontent[index]),
+       body: Center(
+        child: FutureBuilder<RekapModel>(
+          future: RekapController().getRekapHari(idRekap),
+          builder: (_, snapshot) {
+            if (snapshot.hasData) {
+              snapshot.data!.dataHarian
+                  .sort((a, b) => b.tanggalBuat.compareTo(a.tanggalBuat));
+              return ListView.builder(
+                itemCount: snapshot.data!.dataHarian.length,
+                itemBuilder: (context, index) =>
+                    Hari(content: snapshot.data!.dataHarian[index], idRekap : idRekap),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );

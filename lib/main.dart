@@ -1,4 +1,3 @@
-import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/halaman_utama.dart';
@@ -14,8 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HalamanUtama(),
+    return MaterialApp(
+      theme: ThemeData(
+        
+      ),
+      home: const HalamanUtama(),
     );
   }
 }

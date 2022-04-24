@@ -1,5 +1,4 @@
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
-import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';

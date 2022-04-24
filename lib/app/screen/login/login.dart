@@ -1,5 +1,4 @@
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
-import 'package:aplikasi/app/screen/hari/hari.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
@@ -115,13 +114,14 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (_) {
                           return const BulanPage();
                         },
                       ),
+                      (route) => false,
                     );
 
                     }),
