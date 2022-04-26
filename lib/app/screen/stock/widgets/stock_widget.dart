@@ -12,7 +12,7 @@ import 'package:aplikasi/app/screen/stock/widgets/update_stock.dart';
 class StockWidget extends StatelessWidget {
   const StockWidget({required this.konten, Key? key}) : super(key: key);
 
-  final StockContent konten;
+  final StockModel konten;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +50,7 @@ class StockWidget extends StatelessWidget {
                 children: <Widget>[
                   //a) judul
                   Text(
-                    konten.nama,
+                    konten.namaItem,
                     style: GoogleFonts.openSans(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),

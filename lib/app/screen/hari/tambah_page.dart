@@ -7,7 +7,11 @@ import 'package:intl/intl.dart';
 import '../../controllers/rekap_controller.dart';
 
 class TambahPage extends StatefulWidget {
-  const TambahPage({Key? key}) : super(key: key);
+  const TambahPage({Key? key, required this.idRekap, required this.dateTime})
+      : super(key: key);
+
+  final String idRekap;
+  final DateTime dateTime;
 
   @override
   State<TambahPage> createState() => _TambahPageState();
@@ -19,19 +23,25 @@ class _TambahPageState extends State<TambahPage> {
   TextEditingController controller3 = TextEditingController();
   TextEditingController controller4 = TextEditingController();
   RekapController rekap = RekapController();
-  DateTime selectedDate = DateTime.now();
+  late DateTime selectedDate;
 
   selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2022),
-      lastDate: DateTime.now(),
+      firstDate: DateTime(widget.dateTime.year, widget.dateTime.month),
+      lastDate: DateTime(widget.dateTime.year, widget.dateTime.month + 1),
     );
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
       setState(() {});
     }
+  }
+
+  @override
+  void initState() {
+    selectedDate = widget.dateTime;
+    super.initState();
   }
 
   //agar hemat memory
@@ -218,6 +228,7 @@ class _TambahPageState extends State<TambahPage> {
                         pengeluaran: int.parse(controller2.text),
                         ulasan: controller4.text,
                         jumlahJual: int.parse(controller3.text),
+                        idRekap: widget.idRekap,
                       );
                       Navigator.pushAndRemoveUntil(
                         context,

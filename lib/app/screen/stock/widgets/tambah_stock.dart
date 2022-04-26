@@ -31,7 +31,35 @@ class TambahStock extends StatelessWidget {
           title: const Text("Tambah Stok Bahan"),
         ),
 //////////////////////////////////////////// TEXT FIELD /////////////////////////////////////////
-        // body: ,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 20),
+            //1) nama stock
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.coffee_maker_outlined),
+                  labelText: "Nama Stok"),
+            ),
+            const SizedBox(height: 20),
+
+            //2) jumlah stock
+            TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.category_outlined),
+                  labelText: "Jumlah"),
+            ),
+            const SizedBox(height: 20),
+
+            //4) button "ubah profile"
+            ElevatedButton(onPressed: () {}, child: const Text("Simpan"))
+          ],
+        ),
       ),
     );
   }

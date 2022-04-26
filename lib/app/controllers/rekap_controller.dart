@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -11,153 +13,88 @@ class RekapController {
         await FirebaseFirestore.instance.collection("rekapitulasi").get();
     dataRekap = <RekapModel>[
       for (QueryDocumentSnapshot<Map<String, dynamic>> item in data.docs)
-        RekapModel(
-          idRekap: item.data()["id_rekap"],
-          tanggal: (item.data()["tanggal"] as Timestamp).toDate(),
-          dataHarian: <DataHarian>[
-            for (Map<String, dynamic> harian in item.data()["data_harian"])
-              DataHarian(
-                id: harian["id_harian"],
-                pendapatan: harian["pendapatan"],
-                pengeluaran: harian["pengeluaran"],
-                jumlahTerjual: harian["jumlah_terjual"],
-                ulasan: harian["ulasan"],
-                tanggalBuat: (harian["tanggal_buat"] as Timestamp).toDate(),
-                tanggalUbah: (harian["tanggal_ubah"] as Timestamp).toDate(),
-              )
-          ],
-        )
+        RekapModel.fromJson(item.data())
     ];
   }
 
   //METHOD AMBIL DATA HARIAN
-  Future<RekapModel> getRekapHari(String idHarian) async {
+  Future<List<DataHarian>> getRekapHari({String? idRekap}) async {
     final data = await FirebaseFirestore.instance
-        .collection("rekapitulasi")
-        .doc(idHarian)
+        .collection("rekapitulasi_harian")
+        .where("id_rekap", isEqualTo: idRekap)
         .get();
-    return RekapModel(
-      idRekap: idHarian,
-      tanggal: ((data.data() as Map<String, dynamic>)["tanggal"] as Timestamp)
-          .toDate(),
-      dataHarian: <DataHarian>[
-        for (Map<String, dynamic> item
-            in (data.data() as Map<String, dynamic>)["data_harian"])
-          DataHarian(
-            id: item["id_harian"],
-            pendapatan: item["pendapatan"],
-            pengeluaran: item["pengeluaran"],
-            jumlahTerjual: item["jumlah_terjual"],
-            ulasan: item["ulasan"],
-            tanggalBuat: (item["tanggal_buat"] as Timestamp).toDate(),
-            tanggalUbah: (item["tanggal_ubah"] as Timestamp).toDate(),
-          )
-      ],
-    );
+    return <DataHarian>[
+      for (DocumentSnapshot<Map<String, dynamic>> item in data.docs)
+        DataHarian.fromJson(item.data()!)
+    ];
   }
 
   //METHOD UBAH DATA
-  Future<void> ubahRekap(
-      {String? idrekap,
-      DateTime? tanggal,
-      int? pendapatan,
-      int? pengeluaran,
-      int? jumlahJual,
-      String? idHarian,
-      String? ulasan}) async {
-    final data = await FirebaseFirestore.instance
-        .collection("rekapitulasi")
-        .doc(idHarian)
-        .get();
-    int count = 0;
-    final month =
-        FirebaseFirestore.instance.collection("rekapitulasi").doc(idrekap);
-    for (var item in (data.data() as Map<String, dynamic>)["data_harian"]) {
-      if (idHarian == item["id_harian"]) {
-        month.update({
-          "data_harian": FieldValue.arrayRemove([count])
-        });
-      }
-      count++;
-    }
-    
-    month.update(
-      {
-        "data_harian": FieldValue.arrayUnion(
-          [
-            {
-              "id_harian": idHarian,
-              "pendapatan": pendapatan,
-              "pengeluaran": pengeluaran,
-              "jumlah_terjual": jumlahJual,
-              "ulasan": ulasan,
-              "tanggal_buat": tanggal,
-              "tanggal_ubah": tanggal,
-            }
-          ],
-        )
-      },
-    );
+  Future<void> ubahRekap({
+    DateTime? tanggal,
+    int? pendapatan,
+    int? pengeluaran,
+    int? jumlahJual,
+    String? idRekap,
+    String? ulasan,
+    String? idHarian,
+  }) async {
+    final harian = FirebaseFirestore.instance
+        .collection("rekapitulasi_harian")
+        .doc(idHarian);
+
+    await harian.set({
+      "id_harian": idHarian,
+      "id_rekap": idRekap,
+      "pendapatan": pendapatan,
+      "pengeluaran": pengeluaran,
+      "jumlah_terjual": jumlahJual,
+      "ulasan": ulasan,
+      "tanggal_buat": tanggal,
+      "tanggal_ubah": tanggal,
+    });
   }
 
   //METHOD TAMBAH DATA
-  Future<void> insertRekap(
-      {DateTime? tanggal,
-      int? pendapatan,
-      int? pengeluaran,
-      int? jumlahJual,
-      String? ulasan}) async {
-    final data =
-        await FirebaseFirestore.instance.collection("rekapitulasi").get();
-    final month = FirebaseFirestore.instance.collection("rekapitulasi").doc();
-    for (QueryDocumentSnapshot<Map<String, dynamic>> item in data.docs) {
-      if (DateFormat("MMM")
-              .format((item.data()["tanggal"] as Timestamp).toDate()) ==
-          DateFormat("MMM").format(tanggal!)) {
-        final doc = FirebaseFirestore.instance
-            .collection("rekapitulasi")
-            .doc(item.data()["id_rekap"]);
-        await doc.update(
-          {
-            "data_harian": FieldValue.arrayUnion(
-              [
-                {
-                  "id_harian": "dw11w",
-                  "pendapatan": pendapatan,
-                  "pengeluaran": pengeluaran,
-                  "jumlah_terjual": jumlahJual,
-                  "ulasan": ulasan,
-                  "tanggal_buat": tanggal,
-                  "tanggal_ubah": tanggal,
-                }
-              ],
-            )
-          },
-        );
-        return;
-      }
-    }
-    await month.set({
-      "id_rekap": month.id,
-      "tanggal": tanggal,
-      "data_harian": [],
+  Future<void> insertRekap({
+    DateTime? tanggal,
+    int? pendapatan,
+    int? pengeluaran,
+    int? jumlahJual,
+    String? idRekap,
+    String? ulasan,
+  }) async {
+    final harian =
+        FirebaseFirestore.instance.collection("rekapitulasi_harian").doc();
+
+    await harian.set({
+      "id_harian": harian.id,
+      "id_rekap": idRekap,
+      "pendapatan": pendapatan,
+      "pengeluaran": pengeluaran,
+      "jumlah_terjual": jumlahJual,
+      "ulasan": ulasan,
+      "tanggal_buat": tanggal,
+      "tanggal_ubah": tanggal,
     });
-    await month.update(
-      {
-        "data_harian": FieldValue.arrayUnion(
-          [
-            {
-              "id_harian": "dw11w",
-              "pendapatan": pendapatan,
-              "pengeluaran": pengeluaran,
-              "jumlah_terjual": jumlahJual,
-              "ulasan": ulasan,
-              "tanggal_buat": tanggal,
-              "tanggal_ubah": tanggal,
-            }
-          ],
-        )
-      },
-    );
+  }
+
+  //METHOD DELETE
+  Future<void> deleteRekap({String? idHarian}) async {
+    await FirebaseFirestore.instance
+        .collection("rekapitulasi_harian")
+        .doc(idHarian)
+        .delete();
+  }
+
+  //METHOD UPLOAD PROFILE
+  Future<void> fotoProfile(String nama, String telepon) async {
+    await FirebaseFirestore.instance.collection("rekapitulasi").get();
+    final profile =
+        FirebaseFirestore.instance.collection("rekapitulasi_harian").doc();
+    await profile.update({
+      "nama" : nama,
+      "telepon" : telepon,
+    });
   }
 }

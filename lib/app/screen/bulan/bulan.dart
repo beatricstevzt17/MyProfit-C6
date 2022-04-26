@@ -1,4 +1,5 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
+import 'package:aplikasi/app/screen/bulan/tambahbulan.dart';
 import 'package:flutter/material.dart';
 
 //navigasi ke pengaturan
@@ -38,7 +39,7 @@ class _BulanPageState extends State<BulanPage> {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => const TambahPage(),
+            builder: (_) => TambahBulan(),
           ),
         ),
         child: const Icon(Icons.add),
@@ -126,7 +127,7 @@ class _BulanPageState extends State<BulanPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const GrafikPage(),
+                builder: (_) =>  GrafikPage(),
               ),
             ),
           ),

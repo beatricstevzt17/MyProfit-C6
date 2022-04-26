@@ -31,7 +31,7 @@ class Bulan extends StatelessWidget {
           onTap: (() => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => HariPage(harian: content.dataHarian, idRekap: content.idRekap),
+                  builder: (_) => HariPage(idRekap: content.idRekap, dateTime: content.tanggal),
                 ),
               )),
           child: Row(

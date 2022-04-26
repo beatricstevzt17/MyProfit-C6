@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/screen/auth/auth.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/style/style.dart';
@@ -11,6 +12,14 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  //inisialisasi auth
+  late Auth _auth;
+  @override
+  void initState() {
+    _auth = Auth();
+    super.initState();
+  }
+
   final TextEditingController _userC = TextEditingController();
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passC = TextEditingController();
@@ -156,15 +165,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Create Account',
                     style: TextStyle(color: Colors.white),
                   ),
-                 onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const BulanPage();
-                        },
-                      ),
-                    );
+                  onPressed: () async {
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    await _auth
+                        .register(email: _emailC.text, password: _passC.text)
+                        .then( //navigator akan dijalankan jika button registernya sudah selesai
+                          (_) => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const BulanPage();
+                              },
+                            ),
+                          ),
+                        );
                   },
                 ),
               ),

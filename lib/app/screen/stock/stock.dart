@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/controllers/stock_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:aplikasi/app/models/stock_models.dart';
 import 'package:flutter/material.dart';
@@ -20,25 +21,20 @@ import 'package:aplikasi/app/screen/grafik/grafik.dart';
 //navigasi ke bulan (pengaturan)
 import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';
 
-class StockPage extends StatelessWidget {
+class StockPage extends StatefulWidget {
   StockPage({Key? key}) : super(key: key);
-  final List<StockContent> stokkonten = [
-    StockContent(
-        gambar:
-            "https://images.bisnis-cdn.com/thumb/posts/2021/10/08/1452169/tepung-terigu.jpg?w=600&h=400",
-        nama: "Tepung",
-        jumlah: "Jumlah : 3"),
-    StockContent(
-        gambar:
-            "https://risetcdn.jatimtimes.com/images/2022/01/10/Buah-naga-merah-Foto-tuliu.com-P182e54964932ed8c.jpg",
-        nama: "Buah Naga",
-        jumlah: "Jumlah : 3"),
-    StockContent(
-        gambar:
-            "https://res.cloudinary.com/dk0z4ums3/image/upload/v1594114160/attached_image/ketahui-kelebihan-dan-kekurangan-telur-bebek.jpg",
-        nama: "Telur Bebek",
-        jumlah: "Jumlah : 3")
-  ];
+
+  @override
+  State<StockPage> createState() => _StockPageState();
+}
+
+class _StockPageState extends State<StockPage> {
+  late StockController _stockController;
+  @override
+  void initState() {
+    _stockController = StockController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +100,7 @@ class StockPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const GrafikPage(),
+                  builder: (_) => GrafikPage(),
                 ),
               ),
             ),
@@ -137,10 +133,19 @@ class StockPage extends StatelessWidget {
           ]),
         ),
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        body: ListView.builder(
-            itemCount: stokkonten.length,
-            itemBuilder: (context, index) =>
-                StockWidget(konten: stokkonten[index])),
+        body: FutureBuilder(
+          future: _stockController.getStock(),
+          builder: (_, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SizedBox();
+            }
+            return ListView.builder(
+              itemCount: _stockController.dataStok.length,
+              itemBuilder: (context, index) =>
+                  StockWidget(konten: _stockController.dataStok[index]),
+            );
+          },
+        ),
       ),
     );
   }

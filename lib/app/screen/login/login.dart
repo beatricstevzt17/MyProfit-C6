@@ -3,6 +3,8 @@ import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
 
+import '../auth/auth.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -14,6 +16,14 @@ class _LoginPageState extends State<LoginPage> {
   bool isVisible = false;
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passC = TextEditingController();
+
+  //inisialisasi auth
+  late Auth _auth;
+  @override
+  void initState() {
+    _auth = Auth();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,17 +123,19 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const BulanPage();
-                        },
-                      ),
-                      (route) => false,
-                    );
-
+                    onPressed: () async {
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                      await _auth
+                          .signIn(email: _emailC.text, password: _passC.text)
+                          .then((_) => Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) {
+                                    return const BulanPage();
+                                  },
+                                ),
+                                (route) => false,
+                              ));
                     }),
               ),
               TextButton(

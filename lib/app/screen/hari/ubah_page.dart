@@ -239,7 +239,7 @@ class _UbahPageState extends State<UbahPage> {
                         pengeluaran: int.parse(controller2.text),
                         ulasan: controller4.text,
                         jumlahJual: int.parse(controller3.text),
-                        idrekap: widget.idRekap,
+                        idRekap: widget.idRekap,
                       );
                       Navigator.pushAndRemoveUntil(
                         context,
