@@ -17,4 +17,22 @@ class StockController {
         StockModel.fromJson(item.data())
     ];
   }
+
+  //METHOD UBAH DATA
+  Future<void> ubahStock({
+    String? idStock,
+    String? jumlah,
+    String? namaItem,
+
+  }) async {
+    final harian = FirebaseFirestore.instance
+        .collection("stok")
+        .doc(idStock);
+
+    await harian.update({
+      "jumlah": jumlah,
+      "nama_item": namaItem,
+     
+    });
+  }
 }

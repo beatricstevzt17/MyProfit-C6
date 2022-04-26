@@ -127,7 +127,7 @@ class _BulanPageState extends State<BulanPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>  GrafikPage(),
+                builder: (_) =>  const GrafikPage(),
               ),
             ),
           ),

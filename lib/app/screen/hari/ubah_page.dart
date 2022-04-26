@@ -11,8 +11,9 @@ import 'package:intl/intl.dart';
 import '../loading/loading.dart';
 
 class UbahPage extends StatefulWidget {
-  const UbahPage({required this.idRekap,required this.content, Key? key}) : super(key: key);
-
+  const UbahPage({required this.idRekap, required this.content, Key? key})
+      : super(key: key);
+  //1)
   final DataHarian content;
   final String idRekap;
 
@@ -20,16 +21,18 @@ class UbahPage extends StatefulWidget {
   State<UbahPage> createState() => _UbahPageState();
 }
 
-//memesan variabel controler1,2,3,4, dan akan berjalan ketika page ubah data dibuka
+//2) memesan variabel controler1,2,3,4, dan akan berjalan ketika page ubah data dibuka
 class _UbahPageState extends State<UbahPage> {
   late TextEditingController controller1;
   late TextEditingController controller2;
   late TextEditingController controller3;
   late TextEditingController controller4;
   late DateTime selectedDate;
+
+//3) inisialisasi variabel "rekap" yg membungkus RekapController
   RekapController rekap = RekapController();
 
-  //inisialisasi dr variabel di line 17-23 , utk read (mengambil data dr firebase)
+//4) inisialisasi controller1,2,3,4 utk read (mengambil data dr firebase)
   @override
   void initState() {
     controller1 = TextEditingController();
@@ -246,9 +249,11 @@ class _UbahPageState extends State<UbahPage> {
                         MaterialPageRoute(
                             builder: (context) => const BulanPage()),
                         (route) => false,
-                      ).then((value) => setState(() {
-                            rekap.getRekapBulan();
-                          }));
+                      ).then(
+                        (value) => setState(() {
+                          rekap.getRekapBulan();
+                        }),
+                      );
                     },
                     child: const Text(
                       'Ubah Data',

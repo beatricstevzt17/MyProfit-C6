@@ -11,8 +11,9 @@ import 'package:aplikasi/app/screen/stock/widgets/update_stock.dart';
 
 class StockWidget extends StatelessWidget {
   const StockWidget({required this.konten, Key? key}) : super(key: key);
-
+  
   final StockModel konten;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,13 +21,17 @@ class StockWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 2,
       // height: MediaQuery.of(context).size.height * 0.1,
       color: const Color(0xA9B2E5FF),
-      child: Material(color: Colors.transparent,
-        child: InkWell(onTap: () => Navigator.push(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => const UpdateStock()
-              // (content2: content),
-            ),
+                builder: (_) => UpdateStock(
+                      konten: konten,
+                    )
+                // (content2: content),
+                ),
           ),
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,19 +49,19 @@ class StockWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              //2) column utk judul & topik
+              //2) column utk nama item & jumlah
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  //a) judul
+                  //a) nama item
                   Text(
                     konten.namaItem,
                     style: GoogleFonts.openSans(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  //b) topik
+                  //b) jumlah
                   Text(
-                    konten.jumlah,
+                    konten.jumlah + " kg",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

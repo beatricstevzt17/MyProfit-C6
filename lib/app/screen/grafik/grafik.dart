@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:aplikasi/app/controllers/rekap_controller.dart';
+import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/grafik/legend.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,13 @@ class GrafikPage extends StatefulWidget {
 }
 
 class _GrafikPageState extends State<GrafikPage> {
+  late RekapController _rekapController;
+  @override
+  void initState() {
+    _rekapController = RekapController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -70,7 +79,7 @@ class _GrafikPageState extends State<GrafikPage> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => StockPage(),
+                  builder: (_) => const StockPage(),
                 ),
               ),
             ),
@@ -116,36 +125,52 @@ class _GrafikPageState extends State<GrafikPage> {
           ]),
         ),
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        body: const BarChartSample7(),
+        body: FutureBuilder<List<DataHarian>>(
+          future: _rekapController.getRekapGrafik(),
+          builder: (_, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SizedBox();
+            }
+            return BarChartSample7(dataHarian: snapshot.data!);
+          },
+        ),
       ),
     );
   }
 }
 
 class BarChartSample7 extends StatefulWidget {
-  const BarChartSample7({Key? key}) : super(key: key);
+  const BarChartSample7({required this.dataHarian, Key? key}) : super(key: key);
+
+  final List<DataHarian> dataHarian;
 
   static const shadowColor = Color(0xFFCCCCCC);
-  static const dataList = [
-    _BarData(Colors.red, 90, 18),
-    _BarData(Colors.orange, 75, 18),
-    _BarData(Colors.amber, 18, 18),
-    _BarData(Colors.yellow, 60, 18),
-    _BarData(Colors.lightGreen, 50, 18),
-    _BarData(Colors.green, 0, 18),
-    _BarData(Color(0xFF57CAFF), 0, 18),
-    _BarData(Colors.blue, 0, 18),
-    _BarData(Color(0xFF0026B0), 0, 18),
-    _BarData(Color(0xFFFF7FDF), 0, 18),
-    _BarData(Color(0xFFB000CF), 0, 18),
-    _BarData(Color(0xFF730087), 0, 18),
-  ];
 
   @override
   State<BarChartSample7> createState() => _BarChartSample7State();
 }
 
 class _BarChartSample7State extends State<BarChartSample7> {
+  late List<DataHarian> dataHarian;
+  late int value;
+  List<_BarData> bardata() {
+    print(value);
+    return [
+      _BarData(Colors.red, value.toDouble(), 18),
+      _BarData(Colors.orange, 75, 18),
+      _BarData(Colors.amber, 18, 18),
+      _BarData(Colors.yellow, 60, 18),
+      _BarData(Colors.lightGreen, 50, 18),
+      _BarData(Colors.green, 0, 18),
+      _BarData(Color(0xFF57CAFF), 0, 18),
+      _BarData(Colors.blue, 0, 18),
+      _BarData(Color(0xFF0026B0), 0, 18),
+      _BarData(Color(0xFFFF7FDF), 0, 18),
+      _BarData(Color(0xFFB000CF), 0, 18),
+      _BarData(Color(0xFF730087), 0, 18),
+    ];
+  }
+
   BarChartGroupData generateBarGroup(
     int x,
     Color color,
@@ -166,6 +191,23 @@ class _BarChartSample7State extends State<BarChartSample7> {
   }
 
   int touchedGroupIndex = -1;
+  int hitungProfit() {
+    int val = 0;
+    dataHarian.forEach((element) {
+      val += element.pengeluaran;
+    });
+    return val;
+  }
+
+  @override
+  void initState() {
+    dataHarian = widget.dataHarian.where((element) {
+      final date = element.tanggalBuat;
+      return DateTime.now().subtract(const Duration(days: 7)).isBefore(date);
+    }).toList();
+    value = hitungProfit();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +261,7 @@ class _BarChartSample7State extends State<BarChartSample7> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: _IconWidget(
                               index: index,
-                              color: BarChartSample7.dataList[index].color,
+                              color: bardata()[index].color,
                               isSelected: touchedGroupIndex == index,
                             ),
                           );
@@ -238,7 +280,7 @@ class _BarChartSample7State extends State<BarChartSample7> {
                       strokeWidth: 1,
                     ),
                   ),
-                  barGroups: BarChartSample7.dataList.asMap().entries.map((e) {
+                  barGroups: bardata().asMap().entries.map((e) {
                     final index = e.key;
                     final data = e.value;
                     return generateBarGroup(

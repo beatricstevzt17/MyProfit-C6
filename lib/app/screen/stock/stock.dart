@@ -22,7 +22,9 @@ import 'package:aplikasi/app/screen/grafik/grafik.dart';
 import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';
 
 class StockPage extends StatefulWidget {
-  StockPage({Key? key}) : super(key: key);
+  const StockPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StockPage> createState() => _StockPageState();
@@ -40,15 +42,15 @@ class _StockPageState extends State<StockPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const TambahStock(),
-            ),
-          ),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: const Icon(Icons.add),
+        //   onPressed: () => Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (_) => const TambahStock(),
+        //     ),
+        //   ),
+        // ),
         appBar: AppBar(
           backgroundColor: const Color(0xFF9AD0EC),
           title: const Text("Stock Bahan"),
@@ -87,7 +89,7 @@ class _StockPageState extends State<StockPage> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => StockPage(),
+                  builder: (_) => const StockPage(),
                 ),
               ),
             ),
@@ -100,7 +102,7 @@ class _StockPageState extends State<StockPage> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => GrafikPage(),
+                  builder: (_) => const GrafikPage(),
                 ),
               ),
             ),
@@ -141,8 +143,9 @@ class _StockPageState extends State<StockPage> {
             }
             return ListView.builder(
               itemCount: _stockController.dataStok.length,
-              itemBuilder: (context, index) =>
-                  StockWidget(konten: _stockController.dataStok[index]),
+              itemBuilder: (context, index) => StockWidget(
+                konten: _stockController.dataStok[index],
+              ),
             );
           },
         ),

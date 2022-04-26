@@ -14,11 +14,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = false;
+
+  //1) bikin controller utk textform
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passC = TextEditingController();
 
-  //inisialisasi auth
-  late Auth _auth;
+  //2) inisialisasi Auth (dr auth.dart)
+  late Auth _auth; //class Auth() dibungkus dg variabel _auth
   @override
   void initState() {
     _auth = Auth();
@@ -123,10 +125,12 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () async {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    onPressed: () async {
                       await _auth
+                          //3) memanggil method signIn() & memasukan nilai parameter dr inputan textform
                           .signIn(email: _emailC.text, password: _passC.text)
+                          //4) menjalankan navigasi jika button selesai di klik
                           .then((_) => Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

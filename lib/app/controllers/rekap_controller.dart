@@ -97,4 +97,15 @@ class RekapController {
       "telepon" : telepon,
     });
   }
+//////////////////////////////////////////////// GRAFIK //////////////////////////////////////
+  //METHOD AMBIL DATA HARIAN UNTUK GRAFIK
+  Future<List<DataHarian>> getRekapGrafik() async {
+    final data = await FirebaseFirestore.instance
+        .collection("rekapitulasi_harian")
+        .get();
+    return <DataHarian>[
+      for (DocumentSnapshot<Map<String, dynamic>> item in data.docs)
+        DataHarian.fromJson(item.data()!)
+    ];
+  }
 }

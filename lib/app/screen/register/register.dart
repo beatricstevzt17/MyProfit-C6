@@ -12,7 +12,14 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  //inisialisasi auth
+  bool isVisible = false;
+
+  //1) bikin controller utk textform
+  final TextEditingController _userC = TextEditingController();
+  final TextEditingController _emailC = TextEditingController();
+  final TextEditingController _passC = TextEditingController();
+
+  //2) inisialisasi Auth (dr auth.dart)
   late Auth _auth;
   @override
   void initState() {
@@ -20,10 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
   }
 
-  final TextEditingController _userC = TextEditingController();
-  final TextEditingController _emailC = TextEditingController();
-  final TextEditingController _passC = TextEditingController();
-  bool isVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,11 +168,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Create Account',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () async {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                  onPressed: () async {
                     await _auth
+                      //3) memanggil method register() & memasukan nilai parameter dr inputan textform
                         .register(email: _emailC.text, password: _passC.text)
-                        .then( //navigator akan dijalankan jika button registernya sudah selesai
+                      //4) menjalankan navigasi jika button selesai di klik                       
+                        .then( 
                           (_) => Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -95,7 +95,7 @@ class ArtikelPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => StockPage(),
+                  builder: (_) => const StockPage(),
                 ),
               ),
             ),
@@ -108,7 +108,7 @@ class ArtikelPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => GrafikPage(),
+                  builder: (_) => const GrafikPage(),
                 ),
               ),
             ),

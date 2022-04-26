@@ -2,16 +2,17 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 //String? = masih ragu
+//Try & catch kalau ada error/kesalahan, program tidak langsung di stop, melainkan menangkap error, agar apk tetap berjalan
 
-//METHOD REGISTER
 class Auth {
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METHOD REGISTER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<void> register({String? email, String? password}) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email!, // ! = utk mematenkan tipe data dr param
         password: password!, // ! = utk mematenkan tipe data dr param
       );
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) { 
       if (e.code == 'weak-password') {
         log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
@@ -22,7 +23,7 @@ class Auth {
     }
   }
 
-  //METHOD LOGIN
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METHOD LOGIN <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<UserCredential> signIn(
       {String email = "email@gmail.com", String password = "password"}) async {
     try {
