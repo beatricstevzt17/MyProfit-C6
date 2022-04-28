@@ -171,8 +171,12 @@ class _UbahProfileState extends State<UbahProfile> {
                     builder: (_) => const CustomLoading(),
                   );
                   await updateUser(user).then(
-                    (value) => Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => const PengaturanPage())),
+                    (value) => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const PengaturanPage(),
+                      ),
+                    ),
                   );
                 },
                 child: const Text("Ubah Profile"))
