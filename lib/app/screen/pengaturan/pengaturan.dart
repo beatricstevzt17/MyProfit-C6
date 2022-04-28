@@ -1,6 +1,5 @@
 import 'package:aplikasi/app/controllers/auth.dart';
 import 'package:aplikasi/app/controllers/user_provider.dart';
-import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/app/screen/pengaturan/widgets/alert_logout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +67,7 @@ class _PengaturanPageState extends State<PengaturanPage> {
               ),
             ),
           ),
-          
+
 //////////////////////////////////// UBAH PROFILE //////////////////////////
           GestureDetector(
             onTap: () {
