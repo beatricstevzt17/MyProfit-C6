@@ -1,9 +1,13 @@
+import 'package:aplikasi/app/models/user_mode.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
+import 'package:aplikasi/app/screen/wrapper.dart';
 import 'package:aplikasi/style/style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../auth/auth.dart';
+import '../../controllers/auth.dart';
+import '../loading/loading.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -125,8 +129,21 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: TextStyle(color: Colors.white),
                     ),
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH (autentikasi) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     onPressed: () async {
+                      //utk mengambil data user dr firestore berdasarkan email (where _emailC)
+                      final user = await FirebaseFirestore.instance
+                          .collection("users")
+                          .where("email", isEqualTo: _emailC.text)
+                          .get();
+                      //mengambil model
+                      final userData = UserModel.fromJson(
+                        user.docs.first.data(),
+                      );
+                      //memberi "loading"
+                      showDialog(
+                          context: context,
+                          builder: (_) => const CustomLoading());
                       await _auth
                           //3) memanggil method signIn() & memasukan nilai parameter dr inputan textform
                           .signIn(email: _emailC.text, password: _passC.text)
@@ -135,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return const BulanPage();
+                                    return Wrapper(userId: userData.userId);
                                   },
                                 ),
                                 (route) => false,

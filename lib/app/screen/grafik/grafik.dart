@@ -2,13 +2,11 @@ import 'dart:math' as math;
 
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/models/rekap_models.dart';
-import 'package:aplikasi/app/screen/grafik/legend.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:aplikasi/app/models/grafik_models.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 //navigasi ke bulan (beranda)
 import 'package:aplikasi/app/screen/bulan/bulan.dart';

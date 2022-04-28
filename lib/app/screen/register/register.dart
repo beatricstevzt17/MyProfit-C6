@@ -1,5 +1,6 @@
-import 'package:aplikasi/app/screen/auth/auth.dart';
+import 'package:aplikasi/app/controllers/auth.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
+import 'package:aplikasi/app/screen/loading/loading.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:flutter/material.dart';
@@ -168,43 +169,41 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Create Account',
                     style: TextStyle(color: Colors.white),
                   ),
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH (autentikasi) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                   onPressed: () async {
+                    //memberi "loading"
+                    showDialog(
+                        context: context, builder: (_) => const CustomLoading());
                     await _auth
-                      //3) memanggil method register() & memasukan nilai parameter dr inputan textform
-                        .register(email: _emailC.text, password: _passC.text)
-                      //4) menjalankan navigasi jika button selesai di klik                       
-                        .then( 
-                          (_) => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) {
-                                return const BulanPage();
-                              },
-                            ),
-                          ),
+                        //3) memanggil method register() & memasukan nilai parameter dr inputan textform
+                        .register(
+                            email: _emailC.text,
+                            password: _passC.text,
+                            username: _userC.text)
+                        //4) menjalankan navigasi jika button selesai di klik
+                        .then(
+                          (_) => Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(
+                            builder: (_) {
+                              return const LoginPage();
+                            },
+                          ), (route) => false),
                         );
                   },
                 ),
               ),
               TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const LoginPage();
-                        },
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Already have an account?',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  )),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Already have an account?',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
+                ),
+              ),
             ],
           ),
         ),
