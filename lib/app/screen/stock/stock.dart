@@ -40,115 +40,113 @@ class _StockPageState extends State<StockPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   child: const Icon(Icons.add),
-        //   onPressed: () => Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (_) => const TambahStock(),
-        //     ),
-        //   ),
-        // ),
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF9AD0EC),
-          title: const Text("Stock Bahan"),
-        ),
-        drawer: Drawer(
-          child: ListView(children: <Widget>[
-            DrawerHeader(
-              decoration: const BoxDecoration(color: Color(0xFF9AD0EC)),
-              child: Text(
-                "MyProfit",
-                style: GoogleFonts.kaushanScript(
-                    fontSize: 50, color: Colors.white),
+    return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   child: const Icon(Icons.add),
+      //   onPressed: () => Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (_) => const TambahStock(),
+      //     ),
+      //   ),
+      // ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9AD0EC),
+        title: const Text("Stock Bahan"),
+      ),
+      drawer: Drawer(
+        child: ListView(children: <Widget>[
+          DrawerHeader(
+            decoration: const BoxDecoration(color: Color(0xFF9AD0EC)),
+            child: Text(
+              "MyProfit",
+              style:
+                  GoogleFonts.kaushanScript(fontSize: 50, color: Colors.white),
+            ),
+          ),
+          //1.) Rekapan
+          ListTile(
+            title: const Text(
+              "Rekapan",
+              style: TextStyle(
+                fontSize: 15,
               ),
             ),
-            //1.) Rekapan
-            ListTile(
-              title: const Text(
-                "Rekapan",
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const BulanPage(),
+              ),
+            ),
+          ),
+          //2.) Stock Bahan
+          ListTile(
+            title: const Text("Stock Bahan",
                 style: TextStyle(
                   fontSize: 15,
-                ),
-              ),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const BulanPage(),
-                ),
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const StockPage(),
               ),
             ),
-            //2.) Stock Bahan
-            ListTile(
-              title: const Text("Stock Bahan",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const StockPage(),
-                ),
+          ),
+          //3.) Grafik
+          ListTile(
+            title: const Text("Grafik",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const GrafikPage(),
               ),
             ),
-            //3.) Grafik
-            ListTile(
-              title: const Text("Grafik",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const GrafikPage(),
-                ),
+          ),
+          //4.) Artikel
+          ListTile(
+            title: const Text("Artikel",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ArtikelPage(),
               ),
             ),
-            //4.) Artikel
-            ListTile(
-              title: const Text("Artikel",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ArtikelPage(),
-                ),
+          ),
+          //5.) Pengaturan
+          ListTile(
+            title: const Text("Pengaturan",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const PengaturanPage(),
               ),
             ),
-            //5.) Pengaturan
-            ListTile(
-              title: const Text("Pengaturan",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const PengaturanPage(),
-                ),
-              ),
-            ),
-          ]),
-        ),
+          ),
+        ]),
+      ),
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        body: FutureBuilder(
-          future: _stockController.getStock(),
-          builder: (_, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox();
-            }
-            return ListView.builder(
-              itemCount: _stockController.dataStok.length,
-              itemBuilder: (context, index) => StockWidget(
-                konten: _stockController.dataStok[index],
-              ),
-            );
-          },
-        ),
+      body: FutureBuilder(
+        future: _stockController.getStock(),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox();
+          }
+          return ListView.builder(
+            itemCount: _stockController.dataStok.length,
+            itemBuilder: (context, index) => StockWidget(
+              konten: _stockController.dataStok[index],
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:aplikasi/app/models/user_mode.dart';
+import 'package:aplikasi/app/controllers/user_provider.dart';
+import 'package:aplikasi/app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +47,9 @@ class Auth {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METHOD LOGIN <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<UserCredential> signIn(
-      {String email = "email@gmail.com", String password = "password"}) async {
+      {String email = "email@gmail.com",
+      String password = "password",
+      UserProvider? userProvider}) async {
     //agar login cukup 1x saja
     final user = await FirebaseFirestore.instance
         .collection("users")
@@ -54,9 +57,11 @@ class Auth {
         .get();
 
     final userData = UserModel.fromJson(user.docs.first.data());
+    userProvider?.setUser = userData;
+    
     final pref = await SharedPreferences.getInstance();
     pref.setString("id", userData.userId);
-   
+
     try {
       final UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);

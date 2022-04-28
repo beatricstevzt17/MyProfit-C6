@@ -2,6 +2,7 @@ import 'package:aplikasi/app/controllers/auth.dart';
 import 'package:aplikasi/app/controllers/user_provider.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/app/screen/pengaturan/widgets/alert_logout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 //navigasi ke ubah profile
 import 'package:aplikasi/app/screen/pengaturan/widgets/ubah_profile.dart';
@@ -29,70 +30,87 @@ class _PengaturanPageState extends State<PengaturanPage> {
   @override
   Widget build(BuildContext context) {
     //inisialisasi utk mengambil user
-    final user = Provider.of<UserProvider>(context, listen: false);
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () => Navigator.pop(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const BulanPage(),
-              ),
+    final user = Provider.of<UserProvider>(context, listen: false).getUser;
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const BulanPage(),
             ),
-            icon: const Icon(Icons.arrow_back),
           ),
-          backgroundColor: const Color(0xFF9AD0EC),
-          title: const Text("Pengaturan"),
+          icon: const Icon(Icons.arrow_back),
         ),
-        body: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 9),
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: Card(
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const UbahProfile())),
-                    child: const ListTile(
-                      title: Text("Jangkung Satria"),
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg"),
-                      ),
+        backgroundColor: const Color(0xFF9AD0EC),
+        title: const Text("Pengaturan"),
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 9),
+            width: MediaQuery.of(context).size.width * 1,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Card(
+              child: ListTile(
+                //MENGAMBIL DATA USER & PHOTO PROFILE
+                title: Text(user.username),
+                leading: CircleAvatar(
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: user.image,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
                   ),
                 ),
               ),
             ),
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const UbahProfile()));
-                },
-                child: pengaturanProfile(context, "Ubah Profile", Icons.key)),
-            GestureDetector(
+          ),
+          
+//////////////////////////////////// UBAH PROFILE //////////////////////////
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => UbahProfile(
+                            username: user.username,
+                            image: user.image,
+                          )));
+            },
+            child: pengaturanProfile(context, "Ubah Profile", Icons.key),
+          ),
+
+/////////////////////////////////// LOGOUT ///////////////////////////
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertLogout(
+                    auth:
+                        _auth), //memanggil variabel _auth yg ada di line ke-20
+              );
+            },
+            child: pengaturanProfile(context, "LogOut", Icons.logout),
+          ),
+
+////////////////////////////////////// BANTUAN ////////////////////////
+          GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => AlertLogout(
-                      auth:
-                          _auth), //memanggil variabel _auth yg ada di line ke-20
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => UbahProfile(
+                      username: user.username,
+                      image: user.image,
+                    ),
+                  ),
                 );
               },
-              child: pengaturanProfile(context, "LogOut", Icons.logout),
-            ),
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const UbahProfile()));
-                },
-                child: pengaturanProfile(context, "Bantuan", Icons.help)),
-          ],
-        ),
+              child: pengaturanProfile(context, "Bantuan", Icons.help)),
+        ],
       ),
     );
   }

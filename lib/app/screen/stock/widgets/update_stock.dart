@@ -10,8 +10,7 @@ import 'package:aplikasi/app/models/stock_models.dart';
 import 'package:aplikasi/app/screen/stock/stock.dart';
 
 class UpdateStock extends StatefulWidget {
-  const UpdateStock({required this.konten, Key? key})
-      : super(key: key);
+  const UpdateStock({required this.konten, Key? key}) : super(key: key);
   //1)
   final StockModel konten;
 
@@ -48,78 +47,75 @@ class _UpdateStockState extends State<UpdateStock> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF9AD0EC),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () => Navigator.pop(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const StockPage(
-                  
-                ),
-              ),
-            ),
-            tooltip: "Back",
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9AD0EC),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 30,
           ),
-          title: const Text("Ubah Stok Bahan"),
+          onPressed: () => Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const StockPage(),
+            ),
+          ),
+          tooltip: "Back",
         ),
+        title: const Text("Ubah Stok Bahan"),
+      ),
 //////////////////////////////////////////// TEXT FIELD /////////////////////////////////////////
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(height: 20),
-            //1) nama stock
-            TextField(controller: controller1,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  prefixIcon: const Icon(Icons.coffee_maker_outlined),
-                  labelText: "Nama Stok"),
-            ),
-            const SizedBox(height: 20),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const SizedBox(height: 20),
+          //1) nama stock
+          TextField(
+            controller: controller1,
+            decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                prefixIcon: const Icon(Icons.coffee_maker_outlined),
+                labelText: "Nama Stok"),
+          ),
+          const SizedBox(height: 20),
 
-            //2) jumlah stock
-            TextField(controller: controller2,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  prefixIcon: const Icon(Icons.category_outlined),
-                  labelText: "Jumlah"),
-            ),
-            const SizedBox(height: 20),
+          //2) jumlah stock
+          TextField(
+            controller: controller2,
+            decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                prefixIcon: const Icon(Icons.category_outlined),
+                labelText: "Jumlah"),
+          ),
+          const SizedBox(height: 20),
 
-            //4) button "simpan"
-            ElevatedButton(
-                onPressed: () async {
-                  await Future.delayed(
-                    const Duration(seconds: 1),
-                  );
-                  await stok.ubahStock(
-                    idStock: widget.konten.id,
-                    namaItem: controller1.text,
-                    jumlah: controller2.text,
-                  );
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StockPage(
-                          ),
-                    ),
-                  ).then((value) => setState(() {
-                        stok.getStock();
-                      }));
-                },
-                child: const Text("Simpan"))
-          ],
-        ),
+          //4) button "simpan"
+          ElevatedButton(
+              onPressed: () async {
+                await Future.delayed(
+                  const Duration(seconds: 1),
+                );
+                await stok.ubahStock(
+                  idStock: widget.konten.id,
+                  namaItem: controller1.text,
+                  jumlah: controller2.text,
+                );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StockPage(),
+                  ),
+                ).then((value) => setState(() {
+                      stok.getStock();
+                    }));
+              },
+              child: const Text("Simpan"))
+        ],
       ),
     );
   }

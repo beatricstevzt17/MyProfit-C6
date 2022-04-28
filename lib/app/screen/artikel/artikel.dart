@@ -55,97 +55,95 @@ class ArtikelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF9AD0EC),
-          title: const Text("Artikel"),
-        ),
-        drawer: Drawer(
-          child: ListView(children: <Widget>[
-            DrawerHeader(
-              decoration: const BoxDecoration(color: Color(0xFF9AD0EC)),
-              child: Text(
-                "MyProfit",
-                style: GoogleFonts.kaushanScript(
-                    fontSize: 50, color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9AD0EC),
+        title: const Text("Artikel"),
+      ),
+      drawer: Drawer(
+        child: ListView(children: <Widget>[
+          DrawerHeader(
+            decoration: const BoxDecoration(color: Color(0xFF9AD0EC)),
+            child: Text(
+              "MyProfit",
+              style:
+                  GoogleFonts.kaushanScript(fontSize: 50, color: Colors.white),
+            ),
+          ),
+          //1.) Rekapan
+          ListTile(
+            title: const Text(
+              "Rekapan",
+              style: TextStyle(
+                fontSize: 15,
               ),
             ),
-            //1.) Rekapan
-            ListTile(
-              title: const Text(
-                "Rekapan",
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const BulanPage(),
+              ),
+            ),
+          ),
+          //2.) Stock Bahan
+          ListTile(
+            title: const Text("Stock Bahan",
                 style: TextStyle(
                   fontSize: 15,
-                ),
-              ),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const BulanPage(),
-                ),
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const StockPage(),
               ),
             ),
-            //2.) Stock Bahan
-            ListTile(
-              title: const Text("Stock Bahan",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const StockPage(),
-                ),
-              ),
-            ),
-            //3.) Grafik
-            ListTile(
-              title: const Text("Grafik",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const GrafikPage(),
-                ),
-              ),
-            ),
-            //4.) Artikel
-            ListTile(
-              title: const Text("Artikel",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ArtikelPage(),
-                ),
-              ),
-            ),
-            //5.) Pengaturan
-            ListTile(
-              title: const Text("Pengaturan",
-                  style: TextStyle(
-                    fontSize: 15,
-                  )),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const PengaturanPage(),
-                ),
-              ),
-            ),
-          ]),
-        ),
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        body: ListView.builder(
-          itemCount: artikelcontent.length,
-          itemBuilder: (context, index) => ArtikelWidget(
-            content: artikelcontent[index],
           ),
+          //3.) Grafik
+          ListTile(
+            title: const Text("Grafik",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const GrafikPage(),
+              ),
+            ),
+          ),
+          //4.) Artikel
+          ListTile(
+            title: const Text("Artikel",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ArtikelPage(),
+              ),
+            ),
+          ),
+          //5.) Pengaturan
+          ListTile(
+            title: const Text("Pengaturan",
+                style: TextStyle(
+                  fontSize: 15,
+                )),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const PengaturanPage(),
+              ),
+            ),
+          ),
+        ]),
+      ),
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      body: ListView.builder(
+        itemCount: artikelcontent.length,
+        itemBuilder: (context, index) => ArtikelWidget(
+          content: artikelcontent[index],
         ),
       ),
     );

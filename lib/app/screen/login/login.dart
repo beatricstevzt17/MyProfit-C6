@@ -1,10 +1,12 @@
-import 'package:aplikasi/app/models/user_mode.dart';
+import 'package:aplikasi/app/controllers/user_provider.dart';
+import 'package:aplikasi/app/models/user_model.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
 import 'package:aplikasi/app/screen/wrapper.dart';
 import 'package:aplikasi/style/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../controllers/auth.dart';
 import '../loading/loading.dart';
@@ -33,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color(0xFF9AD0EC),
       body: SafeArea(
@@ -131,28 +134,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AUTH (autentikasi) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     onPressed: () async {
-                      //utk mengambil data user dr firestore berdasarkan email (where _emailC)
-                      final user = await FirebaseFirestore.instance
-                          .collection("users")
-                          .where("email", isEqualTo: _emailC.text)
-                          .get();
-                      //mengambil model
-                      final userData = UserModel.fromJson(
-                        user.docs.first.data(),
-                      );
                       //memberi "loading"
                       showDialog(
                           context: context,
                           builder: (_) => const CustomLoading());
                       await _auth
                           //3) memanggil method signIn() & memasukan nilai parameter dr inputan textform
-                          .signIn(email: _emailC.text, password: _passC.text)
+                          .signIn(
+                              email: _emailC.text,
+                              password: _passC.text,
+                              userProvider: user)
                           //4) menjalankan navigasi jika button selesai di klik
                           .then((_) => Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return Wrapper(userId: userData.userId);
+                                    return const BulanPage();
                                   },
                                 ),
                                 (route) => false,
