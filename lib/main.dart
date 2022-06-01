@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/controllers/user_provider.dart';
 import 'package:aplikasi/app/screen/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         //isikan parameter "providers" [] dr user_provider.dart dg :
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RekapController(),
         )
       ],
       child: MaterialApp(

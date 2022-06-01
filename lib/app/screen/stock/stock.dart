@@ -1,4 +1,5 @@
 import 'package:aplikasi/app/controllers/stock_controller.dart';
+import 'package:aplikasi/app/screen/grafik/grafik2.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:aplikasi/app/models/stock_models.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class _StockPageState extends State<StockPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const GrafikPage(),
+                builder: (_) => const GrafikPage2(),
               ),
             ),
           ),

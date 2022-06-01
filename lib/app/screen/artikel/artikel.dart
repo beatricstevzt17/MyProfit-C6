@@ -1,3 +1,4 @@
+import 'package:aplikasi/app/screen/grafik/grafik2.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/app/models/artikel_models.dart';
 //navigasi ke content artikel
@@ -107,7 +108,7 @@ class ArtikelPage extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const GrafikPage(),
+                builder: (_) => const GrafikPage2(),
               ),
             ),
           ),

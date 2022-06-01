@@ -1,5 +1,6 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/screen/bulan/tambahbulan.dart';
+import 'package:aplikasi/app/screen/grafik/grafik2.dart';
 import 'package:flutter/material.dart';
 
 //navigasi ke pengaturan
@@ -67,6 +68,7 @@ class _BulanPageState extends State<BulanPage> {
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               final data = rekap.dataRekap;
+              data.sort((a, b) => b.tanggal.compareTo(a.tanggal));
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (_, index) {
@@ -114,7 +116,7 @@ class _BulanPageState extends State<BulanPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => StockPage(),
+                builder: (_) => const StockPage(),
               ),
             ),
           ),
@@ -127,7 +129,7 @@ class _BulanPageState extends State<BulanPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>  const GrafikPage(),
+                builder: (_) =>  const GrafikPage2(),
               ),
             ),
           ),
