@@ -1,10 +1,7 @@
 import 'package:aplikasi/app/controllers/user_provider.dart';
-import 'package:aplikasi/app/models/user_model.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/register/register.dart';
-import 'package:aplikasi/app/screen/wrapper.dart';
 import 'package:aplikasi/style/style.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

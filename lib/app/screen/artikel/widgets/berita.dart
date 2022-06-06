@@ -1,4 +1,3 @@
-import 'package:aplikasi/app/screen/artikel/widgets/artikel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/app/models/artikel_models.dart';
 

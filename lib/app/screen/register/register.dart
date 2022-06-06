@@ -1,5 +1,4 @@
 import 'package:aplikasi/app/controllers/auth.dart';
-import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/loading/loading.dart';
 import 'package:aplikasi/app/screen/login/login.dart';
 import 'package:aplikasi/style/style.dart';

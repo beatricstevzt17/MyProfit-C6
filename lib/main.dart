@@ -4,6 +4,7 @@ import 'package:aplikasi/app/screen/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/halaman_utama.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ Future<void> selectedRoute() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  initializeDateFormatting("in_ID", "");
   selectedRoute(); //memanggil method "selectedRoute() dr line ke-9"
 }
 

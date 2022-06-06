@@ -1,10 +1,7 @@
-import 'dart:developer';
 
 import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
 class RekapController with ChangeNotifier {
   List<RekapModel> dataRekap = [];
@@ -21,20 +18,22 @@ class RekapController with ChangeNotifier {
     notifyListeners();
   }
 
+  List<DataHarian> dataRekapHarian = [];
   //METHOD AMBIL DATA HARIAN
-  Future<List<DataHarian>> getRekapHari({String? idRekap}) async {
+  Future<void> getRekapHari({String? idRekap}) async {
     final data = await FirebaseFirestore.instance
         .collection("rekapitulasi_harian")
         .where("id_rekap", isEqualTo: idRekap)
         .get();
-    return <DataHarian>[
+    dataRekapHarian = <DataHarian>[
       for (DocumentSnapshot<Map<String, dynamic>> item in data.docs)
         DataHarian.fromJson(item.data()!)
     ];
+    notifyListeners();
   }
 
   List<DataHarian>? _dataHarian;
-  
+
   List<DataHarian> desB = [];
   List<DataHarian> jan = [];
   List<DataHarian> feb = [];
@@ -61,86 +60,114 @@ class RekapController with ChangeNotifier {
     setDataHarian = <DataHarian>[
       for (var i in data.docs) DataHarian.fromJson(i.data())
     ];
-    sumPendatapan = getDataHarian!.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    sumPengeluaran = getDataHarian!.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    sumPendatapan = getDataHarian!.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    sumPengeluaran = getDataHarian!.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     desB = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2021 && element.tanggalBuat.month == 12)
         .toList();
-    dataPendapatan[0] = desB.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[0] = desB.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[0] = desB.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[0] = desB.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     jan = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 1)
         .toList();
-    dataPendapatan[1] = jan.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[1] = jan.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[1] = jan.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[1] = jan.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     feb = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 2)
         .toList();
-    dataPendapatan[2] = feb.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[2] = feb.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[2] = feb.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[2] = feb.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     mar = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 3)
         .toList();
-    dataPendapatan[3] = mar.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[3] = mar.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[3] = mar.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[3] = mar.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     apr = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 4)
         .toList();
-    dataPendapatan[4] = apr.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[4] = apr.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[4] = apr.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[4] = apr.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     mei = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 5)
         .toList();
-    dataPendapatan[5] = mei.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[5] = mei.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[5] = mei.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[5] = mei.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     jun = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 6)
         .toList();
-    dataPendapatan[6] = jun.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[6] = jun.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[6] = jun.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[6] = jun.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     jul = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 7)
         .toList();
-    dataPendapatan[7] = jul.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[7] = jul.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[7] = jul.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[7] = jul.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     agu = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 8)
         .toList();
-    dataPendapatan[8] = agu.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[8] = agu.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[8] = agu.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[8] = agu.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     sep = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 9)
         .toList();
-    dataPendapatan[9] = sep.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[9] = sep.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[9] = sep.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[9] = sep.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     okt = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 10)
         .toList();
-    dataPendapatan[10] = okt.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[10] = okt.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[10] = okt.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[10] = okt.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     nov = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 11)
         .toList();
-    dataPendapatan[11] = nov.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[11] = nov.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[11] = nov.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[11] = nov.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
     des = getDataHarian!
         .where((element) =>
             element.tanggalBuat.year == 2022 && element.tanggalBuat.month == 12)
         .toList();
-    dataPendapatan[12] = des.fold(0, (previousValue, element) => previousValue + element.pendapatan);
-    dataPengeluaran[12] = des.fold(0, (previousValue, element) => previousValue + element.pengeluaran);
+    dataPendapatan[12] = des.fold(
+        0, (previousValue, element) => previousValue + element.pendapatan);
+    dataPengeluaran[12] = des.fold(
+        0, (previousValue, element) => previousValue + element.pengeluaran);
   }
 
   set setDataHarian(List<DataHarian> val) {
@@ -185,6 +212,30 @@ class RekapController with ChangeNotifier {
     String? idRekap,
     String? ulasan,
   }) async {
+    final getRekap =
+        await FirebaseFirestore.instance.collection("rekapitulasi").get();
+    int count = 0;
+    for (QueryDocumentSnapshot item in getRekap.docs) {
+      final rekapModel =
+          RekapModel.fromJson((item.data() as Map<String, dynamic>));
+      if (rekapModel.tanggal.month != tanggal!.month) {
+        count += 1;
+      } else if (rekapModel.tanggal.month == tanggal.month) {
+        idRekap = rekapModel.idRekap;
+        break;
+      }
+    }
+
+    if (count == getRekap.docs.length) {
+      final rekapDoc =
+          FirebaseFirestore.instance.collection("rekapitulasi").doc();
+      await rekapDoc.set({
+        "id_rekap": rekapDoc.id,
+        "tanggal": tanggal,
+      });
+      idRekap = rekapDoc.id;
+    }
+
     final harian =
         FirebaseFirestore.instance.collection("rekapitulasi_harian").doc();
 
@@ -206,6 +257,7 @@ class RekapController with ChangeNotifier {
         .collection("rekapitulasi_harian")
         .doc(idHarian)
         .delete();
+    notifyListeners();
   }
 
   //METHOD UPLOAD PROFILE
@@ -229,5 +281,13 @@ class RekapController with ChangeNotifier {
       for (DocumentSnapshot<Map<String, dynamic>> item in data.docs)
         DataHarian.fromJson(item.data()!)
     ];
+  }
+
+  Future<void> deleteRekapBulanan({required String rekapId}) async {
+    await FirebaseFirestore.instance
+        .collection("rekapitulasi")
+        .doc(rekapId)
+        .delete();
+    notifyListeners();
   }
 }

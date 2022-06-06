@@ -1,14 +1,12 @@
 import 'package:aplikasi/app/controllers/stock_controller.dart';
 import 'package:aplikasi/app/screen/grafik/grafik2.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aplikasi/app/models/stock_models.dart';
 import 'package:flutter/material.dart';
 
 //navigasi ke child (StockWidget)
 import 'package:aplikasi/app/screen/stock/widgets/stock_widget.dart';
 
 //navigasi ke tambah stock
-import 'package:aplikasi/app/screen/stock/widgets/tambah_stock.dart';
 
 //navigasi ke bulan (beranda)
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
@@ -17,7 +15,6 @@ import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/artikel/artikel.dart';
 
 //navigasi ke bulan (grafik)
-import 'package:aplikasi/app/screen/grafik/grafik.dart';
 
 //navigasi ke bulan (pengaturan)
 import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';

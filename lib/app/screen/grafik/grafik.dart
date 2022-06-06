@@ -150,20 +150,19 @@ class _BarChartSample7State extends State<BarChartSample7> {
   late List<DataHarian> dataHarian;
   late int value;
   List<_BarData> bardata() {
-    print(value);
     return [
       _BarData(Colors.red, value.toDouble(), 18),
-      _BarData(Colors.orange, 75, 18),
-      _BarData(Colors.amber, 18, 18),
-      _BarData(Colors.yellow, 60, 18),
-      _BarData(Colors.lightGreen, 50, 18),
-      _BarData(Colors.green, 0, 18),
-      _BarData(Color(0xFF57CAFF), 0, 18),
-      _BarData(Colors.blue, 0, 18),
-      _BarData(Color(0xFF0026B0), 0, 18),
-      _BarData(Color(0xFFFF7FDF), 0, 18),
-      _BarData(Color(0xFFB000CF), 0, 18),
-      _BarData(Color(0xFF730087), 0, 18),
+      const _BarData(Colors.orange, 75, 18),
+      const _BarData(Colors.amber, 18, 18),
+      const _BarData(Colors.yellow, 60, 18),
+      const _BarData(Colors.lightGreen, 50, 18),
+      const _BarData(Colors.green, 0, 18),
+      const _BarData(Color(0xFF57CAFF), 0, 18),
+      const _BarData(Colors.blue, 0, 18),
+      const _BarData(Color(0xFF0026B0), 0, 18),
+      const _BarData(Color(0xFFFF7FDF), 0, 18),
+      const _BarData( Color(0xFFB000CF), 0, 18),
+      const _BarData(Color(0xFF730087), 0, 18),
     ];
   }
 

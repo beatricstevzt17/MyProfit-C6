@@ -1,5 +1,4 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
-import 'package:aplikasi/app/screen/bulan/tambahbulan.dart';
 import 'package:aplikasi/app/screen/grafik/grafik2.dart';
 import 'package:flutter/material.dart';
 
@@ -7,14 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';
 
 //navigasi ke grafik
-import 'package:aplikasi/app/screen/grafik/grafik.dart';
 
 //navigasi ke artikel
 import 'package:aplikasi/app/screen/artikel/artikel.dart';
 
 //navigasi ke stock
 import 'package:aplikasi/app/screen/stock/stock.dart';
-import 'package:aplikasi/app/models/stock_models.dart';
 
 //navigasi ke bulan
 import 'package:aplikasi/app/screen/bulan/widgets/konten_bulan.dart';
@@ -22,6 +19,7 @@ import 'package:aplikasi/app/screen/bulan/widgets/konten_bulan.dart';
 //fab
 import 'package:aplikasi/app/screen/hari/tambah_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class BulanPage extends StatefulWidget {
   const BulanPage({Key? key}) : super(key: key);
@@ -31,42 +29,29 @@ class BulanPage extends StatefulWidget {
 }
 
 class _BulanPageState extends State<BulanPage> {
-  RekapController rekap = RekapController();
-
   @override
   Widget build(BuildContext context) {
+    final rekap = Provider.of<RekapController>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => TambahBulan(),
-          ),
-        ),
-        child: const Icon(Icons.add),
-      ),
+          child: const Icon(Icons.add),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const TambahPage()))),
       appBar: AppBar(
         backgroundColor: const Color(0xFF9AD0EC),
         title: Text(
           "MyProfit",
           style: GoogleFonts.kaushanScript(fontSize: 30),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                rekap.getRekapBulan();
-              });
-            },
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
       ),
       body: Center(
         child: FutureBuilder(
           future: rekap.getRekapBulan(),
           builder: (_, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (rekap.dataRekap.isEmpty) {
+              return const SizedBox();
+            }
+            if (rekap.dataRekap.isNotEmpty) {
               final data = rekap.dataRekap;
               data.sort((a, b) => b.tanggal.compareTo(a.tanggal));
               return ListView.builder(
@@ -129,7 +114,7 @@ class _BulanPageState extends State<BulanPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>  const GrafikPage2(),
+                builder: (_) => const GrafikPage2(),
               ),
             ),
           ),

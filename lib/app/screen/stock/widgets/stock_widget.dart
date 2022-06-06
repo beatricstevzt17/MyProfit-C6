@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:aplikasi/app/models/stock_models.dart';
 
 //tambah stock
-import 'package:aplikasi/app/screen/stock/widgets/tambah_stock.dart';
 
 //ubah stock
 import 'package:aplikasi/app/screen/stock/widgets/update_stock.dart';

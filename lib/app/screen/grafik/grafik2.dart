@@ -108,7 +108,7 @@ class _GrafikPage2State extends State<GrafikPage2> {
                                                 .toStringAsFixed(1) +
                                             "%"),
                                 Container(
-                                  color: (date.month == index)
+                                  color: (date.month == index + 1)
                                       ? Colors.green
                                       : Colors.red,
                                   height: (pend == 0)
@@ -226,7 +226,7 @@ class _GrafikPage2State extends State<GrafikPage2> {
                                                 .toStringAsFixed(1) +
                                             "%"),
                                 Container(
-                                  color: (date.month == index)
+                                  color: (date.month == index + 1)
                                       ? Colors.green
                                       : Colors.blue,
                                   height: (peng == 0)

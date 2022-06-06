@@ -1,9 +1,10 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/models/rekap_models.dart';
-import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/hari/ubah_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../loading/loading.dart';
 
 //memanggil kerangka hari :
 // import '../bulan.dart';
@@ -53,7 +54,8 @@ class Hari extends StatelessWidget {
                   ),
                   //b) text bulan
                   Text(
-                    DateFormat("EEEE, dd MM yyyy").format(content.tanggalBuat),
+                    DateFormat("EEEE, dd MM yyyy", "in_ID")
+                        .format(content.tanggalBuat),
                     style: const TextStyle(fontSize: 20),
                   )
                 ],
@@ -63,11 +65,35 @@ class Hari extends StatelessWidget {
                 scale: 0.7,
                 child: IconButton(
                     onPressed: () {
-                      rekap.deleteRekap(idHarian: content.id);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => const BulanPage()),
-                          (route) => false);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => AlertDialog(
+                          title: const Text("Perhatian!"),
+                          content: Text(
+                            "Apakah anda yakin ingin menghapus rekap ${DateFormat('d').format(content.tanggalBuat)} ${DateFormat('MMMM').format(content.tanggalBuat)} ${content.tanggalBuat.year}",
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Tidak"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => const CustomLoading());
+                                rekap.deleteRekap(idHarian: content.id);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Ya"),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     icon: Image.asset("assets/icons/delete.png")),
               ),

@@ -1,7 +1,5 @@
 import 'package:aplikasi/app/controllers/stock_controller.dart';
-import 'package:aplikasi/app/screen/stock/widgets/stock_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 //models
 import 'package:aplikasi/app/models/stock_models.dart';

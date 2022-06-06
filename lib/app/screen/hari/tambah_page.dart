@@ -1,17 +1,14 @@
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/loading/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 
 import '../../controllers/rekap_controller.dart';
 
 class TambahPage extends StatefulWidget {
-  const TambahPage({Key? key, required this.idRekap, required this.dateTime})
-      : super(key: key);
-
-  final String idRekap;
-  final DateTime dateTime;
+  const TambahPage({Key? key}) : super(key: key);
 
   @override
   State<TambahPage> createState() => _TambahPageState();
@@ -29,8 +26,9 @@ class _TambahPageState extends State<TambahPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(widget.dateTime.year, widget.dateTime.month),
-      lastDate: DateTime(widget.dateTime.year, widget.dateTime.month + 1),
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day),
     );
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
@@ -40,7 +38,7 @@ class _TambahPageState extends State<TambahPage> {
 
   @override
   void initState() {
-    selectedDate = widget.dateTime;
+    selectedDate = DateTime.now();
     super.initState();
   }
 
@@ -91,8 +89,9 @@ class _TambahPageState extends State<TambahPage> {
                           children: [
                             Padding(
                                 padding: const EdgeInsets.only(left: 5),
-                                child: Text(DateFormat("EEEE, dd/MM/yyyy")
-                                    .format(selectedDate))),
+                                child: Text(
+                                    DateFormat("EEEE, dd/MM/yyyy", "in_ID")
+                                        .format(selectedDate))),
                             IconButton(
                                 onPressed: () => selectDate(context),
                                 icon: Image.asset("assets/icons/calendar.png"))
@@ -125,6 +124,9 @@ class _TambahPageState extends State<TambahPage> {
                         child: TextField(
                           keyboardType: TextInputType.number,
                           controller: controller1,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                          ],
                         ),
                       ),
                     ],
@@ -153,6 +155,9 @@ class _TambahPageState extends State<TambahPage> {
                         child: TextField(
                           keyboardType: TextInputType.number,
                           controller: controller2,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                          ],
                         ),
                       ),
                     ],
@@ -181,6 +186,9 @@ class _TambahPageState extends State<TambahPage> {
                         child: TextField(
                           keyboardType: TextInputType.number,
                           controller: controller3,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                          ],
                         ),
                       ),
                     ],
@@ -221,14 +229,12 @@ class _TambahPageState extends State<TambahPage> {
                       showDialog(
                           context: context,
                           builder: (_) => const CustomLoading());
-                      await Future.delayed(const Duration(seconds: 1));
                       await rekap.insertRekap(
                         tanggal: selectedDate,
                         pendapatan: int.parse(controller1.text),
                         pengeluaran: int.parse(controller2.text),
                         ulasan: controller4.text,
                         jumlahJual: int.parse(controller3.text),
-                        idRekap: widget.idRekap,
                       );
                       Navigator.pushAndRemoveUntil(
                         context,

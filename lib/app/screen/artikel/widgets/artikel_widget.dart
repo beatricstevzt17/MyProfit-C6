@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:aplikasi/app/models/artikel_models.dart';
 
 //path parent
-import 'package:aplikasi/app/screen/artikel/artikel.dart';
 
 //navigasi ke page berita
 import 'package:aplikasi/app/screen/artikel/widgets/berita.dart';

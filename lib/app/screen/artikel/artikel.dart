@@ -14,7 +14,6 @@ import 'package:aplikasi/app/screen/stock/stock.dart';
 import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';
 
 //navigasi ke grafik
-import 'package:aplikasi/app/screen/grafik/grafik.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArtikelPage extends StatelessWidget {
