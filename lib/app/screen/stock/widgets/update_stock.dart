@@ -65,55 +65,80 @@ class _UpdateStockState extends State<UpdateStock> {
         title: const Text("Ubah Stok Bahan"),
       ),
 //////////////////////////////////////////// TEXT FIELD /////////////////////////////////////////
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const SizedBox(height: 20),
-          //1) nama stock
-          TextField(
-            controller: controller1,
-            decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon: const Icon(Icons.coffee_maker_outlined),
-                labelText: "Nama Stok"),
-          ),
-          const SizedBox(height: 20),
-
-          //2) jumlah stock
-          TextField(
-            controller: controller2,
-            decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon: const Icon(Icons.category_outlined),
-                labelText: "Jumlah"),
-          ),
-          const SizedBox(height: 20),
-
-          //4) button "simpan"
-          ElevatedButton(
-              onPressed: () async {
-                await Future.delayed(
-                  const Duration(seconds: 1),
-                );
-                await stok.ubahStock(
-                  idStock: widget.konten.id,
-                  namaItem: controller1.text,
-                  jumlah: controller2.text,
-                );
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const StockPage(),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 20),
+            //1) nama stock
+            TextField(
+              controller: controller1,
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color(0xFF9AD0EC),
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Color(0xFF9AD0EC)),
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(
+                    Icons.coffee_maker_outlined,
+                    color: Color(0xFF9AD0EC),
                   ),
-                ).then((value) => setState(() {
-                      stok.getStock();
-                    }));
-              },
-              child: const Text("Simpan"))
-        ],
+                  labelText: "Nama Stok"),
+            ),
+            const SizedBox(height: 20),
+
+            //2) jumlah stock
+            TextField(
+              controller: controller2,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color(0xFF9AD0EC),
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(
+                    Icons.category_outlined,
+                    color: Color(0xFF9AD0EC),
+                  ),
+                  labelText: "Jumlah"),
+            ),
+            const SizedBox(height: 20),
+
+            //4) button "simpan"
+            ElevatedButton(
+                onPressed: () async {
+                  await Future.delayed(
+                    const Duration(seconds: 1),
+                  );
+                  await stok.ubahStock(
+                    idStock: widget.konten.id,
+                    namaItem: controller1.text,
+                    jumlah: controller2.text,
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StockPage(),
+                    ),
+                  ).then((value) => setState(() {
+                        stok.getStock();
+                      }));
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 25),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                child: const Text("Simpan"))
+          ],
+        ),
       ),
     );
   }

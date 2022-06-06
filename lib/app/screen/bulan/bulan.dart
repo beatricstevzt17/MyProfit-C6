@@ -29,6 +29,8 @@ class BulanPage extends StatefulWidget {
 }
 
 class _BulanPageState extends State<BulanPage> {
+  bool isAsc = false;
+
   @override
   Widget build(BuildContext context) {
     final rekap = Provider.of<RekapController>(context);
@@ -45,26 +47,83 @@ class _BulanPageState extends State<BulanPage> {
         ),
       ),
       body: Center(
-        child: FutureBuilder(
-          future: rekap.getRekapBulan(),
-          builder: (_, snapshot) {
-            if (rekap.dataRekap.isEmpty) {
-              return const SizedBox();
-            }
-            if (rekap.dataRekap.isNotEmpty) {
-              final data = rekap.dataRekap;
-              data.sort((a, b) => b.tanggal.compareTo(a.tanggal));
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, index) {
-                  return Bulan(content: data[index]);
-                },
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  "Urutkan: ",
+                  style: TextStyle(fontSize: 18),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    isAsc = !isAsc;
+                    setState(() {});
+                  },
+                  child: const Text("A - Z"),
+                  style: ElevatedButton.styleFrom(
+                    primary: isAsc
+                        ? const Color(0xFF4EB9EF)
+                        : const Color(0xFF9AD0EC),
+                    elevation: 0,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    isAsc = !isAsc;
+                    setState(() {});
+                  },
+                  child: const Text("Z - A"),
+                  style: ElevatedButton.styleFrom(
+                    primary: isAsc
+                        ? const Color(0xFF9AD0EC)
+                        : const Color(0xFF4EB9EF),
+                    elevation: 0,
+                  ),
+                ),
+                const SizedBox(width: 10),
+              ],
+            ),
+            FutureBuilder(
+              future: rekap.getRekapBulan(),
+              builder: (_, snapshot) {
+                if (rekap.dataRekap.isEmpty) {
+                  return const SizedBox();
+                }
+                if (rekap.dataRekap.isNotEmpty) {
+                  if (isAsc) {
+                    final data = rekap.dataRekap;
+                    data.sort((a, b) => a.tanggal.compareTo(b.tanggal));
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (_, index) {
+                          return Bulan(content: data[index]);
+                        },
+                      ),
+                    );
+                  } else if (!isAsc) {
+                    final data = rekap.dataRekap;
+                    data.sort((a, b) => b.tanggal.compareTo(a.tanggal));
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (_, index) {
+                          return Bulan(content: data[index]);
+                        },
+                      ),
+                    );
+                  }
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ],
         ),
       ),
       drawer: Drawer(
