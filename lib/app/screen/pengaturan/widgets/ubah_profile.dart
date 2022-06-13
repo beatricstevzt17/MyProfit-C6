@@ -158,7 +158,15 @@ class _UbahProfileState extends State<UbahProfile> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  prefixIcon: const Icon(Icons.person),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color(0xFF9AD0EC),
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: Color(0xFF9AD0EC),
+                  ),
                   labelText: "Nama"),
             ),
             const SizedBox(height: 20),
@@ -171,12 +179,7 @@ class _UbahProfileState extends State<UbahProfile> {
                     builder: (_) => const CustomLoading(),
                   );
                   await updateUser(user).then(
-                    (value) => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const PengaturanPage(),
-                      ),
-                    ),
+                    (value) => Navigator.pop(context),
                   );
                 },
                 child: const Text("Ubah Profile"))

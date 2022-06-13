@@ -77,7 +77,9 @@ class _PengaturanPageState extends State<PengaturanPage> {
                       builder: (_) => UbahProfile(
                             username: user.username,
                             image: user.image,
-                          )));
+                          ))).then((value) {
+                setState(() {});
+              });
             },
             child: pengaturanProfile(context, "Ubah Profile", Icons.key),
           ),
@@ -97,17 +99,7 @@ class _PengaturanPageState extends State<PengaturanPage> {
 
 ////////////////////////////////////// BANTUAN ////////////////////////
           GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => UbahProfile(
-                      username: user.username,
-                      image: user.image,
-                    ),
-                  ),
-                );
-              },
+              onTap: () {},
               child: pengaturanProfile(context, "Bantuan", Icons.help)),
         ],
       ),
@@ -115,31 +107,35 @@ class _PengaturanPageState extends State<PengaturanPage> {
   }
 
 //////////////////////////////////////////// METHOD ////////////////////////////
-  Container pengaturanProfile(
+  Widget pengaturanProfile(
       BuildContext context, String namaSetting, IconData ikon) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      //perbaiki border profile
-      decoration: const BoxDecoration(
-        // color: Colo/rs.amber,
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: Color.fromARGB(255, 166, 166, 166),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        //perbaiki border profile
+        decoration: const BoxDecoration(
+          // color: Colo/rs.amber,
+          border: Border(
+            bottom: BorderSide(
+              width: 1,
+              color: Color.fromARGB(255, 166, 166, 166),
+            ),
           ),
         ),
-      ),
-      margin: const EdgeInsets.only(top: 19),
-      width: MediaQuery.of(context).size.width * 1,
-      height: MediaQuery.of(context).size.height * 0.1,
-      child: Row(
-        children: [
-          Icon(ikon),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(namaSetting),
-        ],
+        width: MediaQuery.of(context).size.width * 1,
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: Row(
+          children: [
+            Icon(
+              ikon,
+              color: const Color.fromARGB(255, 94, 157, 188),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(namaSetting),
+          ],
+        ),
       ),
     );
   }

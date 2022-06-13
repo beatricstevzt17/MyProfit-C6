@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/models/rekap_models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,10 @@ import 'package:aplikasi/app/screen/pengaturan/pengaturan.dart';
 
 //navigasi ke artikel
 import 'package:aplikasi/app/screen/artikel/artikel.dart';
+import 'package:provider/provider.dart';
+
+import '../../controllers/user_provider.dart';
+import 'grafik2.dart';
 
 class GrafikPage extends StatefulWidget {
   const GrafikPage({Key? key}) : super(key: key);
@@ -37,6 +42,7 @@ class _GrafikPageState extends State<GrafikPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF9AD0EC),
@@ -45,15 +51,56 @@ class _GrafikPageState extends State<GrafikPage> {
       drawer: Drawer(
         child: ListView(children: <Widget>[
           DrawerHeader(
-            decoration: const BoxDecoration(color: Color(0xFF9AD0EC)),
-            child: Text(
-              "MyProfit",
-              style:
-                  GoogleFonts.kaushanScript(fontSize: 50, color: Colors.white),
+            decoration:
+                const BoxDecoration(color: Color.fromARGB(255, 115, 188, 224)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "MyProfit",
+                  style: GoogleFonts.kaushanScript(
+                      fontSize: 45, color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: user.getUser.image,
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user.getUser.username,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          (user.getUser.isOwner) ? "Owner" : "Admin",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
             ),
           ),
           //1.) Rekapan
           ListTile(
+            leading: const Icon(
+              Icons.note_alt_outlined,
+              color: Color.fromARGB(255, 94, 157, 188),
+            ),
             title: const Text(
               "Rekapan",
               style: TextStyle(
@@ -69,6 +116,10 @@ class _GrafikPageState extends State<GrafikPage> {
           ),
           //2.) Stock Bahan
           ListTile(
+            leading: const Icon(
+              Icons.category_outlined,
+              color: Color.fromARGB(255, 94, 157, 188),
+            ),
             title: const Text("Stock Bahan",
                 style: TextStyle(
                   fontSize: 15,
@@ -82,6 +133,10 @@ class _GrafikPageState extends State<GrafikPage> {
           ),
           //3.) Grafik
           ListTile(
+            leading: const Icon(
+              Icons.bar_chart,
+              color: Color.fromARGB(255, 94, 157, 188),
+            ),
             title: const Text("Grafik",
                 style: TextStyle(
                   fontSize: 15,
@@ -89,12 +144,16 @@ class _GrafikPageState extends State<GrafikPage> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const GrafikPage(),
+                builder: (_) => const GrafikPage2(),
               ),
             ),
           ),
           //4.) Artikel
           ListTile(
+            leading: const Icon(
+              Icons.article_outlined,
+              color: Color.fromARGB(255, 94, 157, 188),
+            ),
             title: const Text("Artikel",
                 style: TextStyle(
                   fontSize: 15,
@@ -108,6 +167,10 @@ class _GrafikPageState extends State<GrafikPage> {
           ),
           //5.) Pengaturan
           ListTile(
+            leading: const Icon(
+              Icons.settings_outlined,
+              color: Color.fromARGB(255, 94, 157, 188),
+            ),
             title: const Text("Pengaturan",
                 style: TextStyle(
                   fontSize: 15,
@@ -161,7 +224,7 @@ class _BarChartSample7State extends State<BarChartSample7> {
       const _BarData(Colors.blue, 0, 18),
       const _BarData(Color(0xFF0026B0), 0, 18),
       const _BarData(Color(0xFFFF7FDF), 0, 18),
-      const _BarData( Color(0xFFB000CF), 0, 18),
+      const _BarData(Color(0xFFB000CF), 0, 18),
       const _BarData(Color(0xFF730087), 0, 18),
     ];
   }

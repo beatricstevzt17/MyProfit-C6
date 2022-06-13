@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../controllers/rekap_controller.dart';
+import '../../controllers/user_provider.dart';
 
 class TambahPage extends StatefulWidget {
   const TambahPage({Key? key}) : super(key: key);
@@ -95,7 +97,12 @@ class _TambahPageState extends State<TambahPage> {
                                       DateFormat("EEEE, dd/MM/yyyy", "in_ID")
                                           .format(selectedDate))),
                               IconButton(
-                                  onPressed: () => selectDate(context),
+                                  onPressed: (context
+                                          .read<UserProvider>()
+                                          .getUser
+                                          .isOwner)
+                                      ? null
+                                      : () => selectDate(context),
                                   icon:
                                       Image.asset("assets/icons/calendar.png"))
                             ],

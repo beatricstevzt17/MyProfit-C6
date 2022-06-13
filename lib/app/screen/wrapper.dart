@@ -12,6 +12,7 @@ class Wrapper extends StatelessWidget {
     //1) inisialisasi provider yg sudah dibuat di file "user_provider.dart" di folder controller
     final user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
+      
       body: FutureBuilder(
         future: user.getUserData(userId: userId),
         builder: (_, snapshot) {

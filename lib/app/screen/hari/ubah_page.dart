@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../controllers/rekap_controller.dart';
 
 //utk dateformat
 import 'package:intl/intl.dart';
 
+import '../../controllers/user_provider.dart';
 import '../loading/loading.dart';
 
 class UbahPage extends StatefulWidget {
@@ -114,7 +116,12 @@ class _UbahPageState extends State<UbahPage> {
                                   child: Text(DateFormat("EEEE, dd/MM/yyyy")
                                       .format(selectedDate))),
                               IconButton(
-                                  onPressed: () => selectDate(context),
+                                  onPressed: (context
+                                          .read<UserProvider>()
+                                          .getUser
+                                          .isOwner)
+                                      ? null
+                                      : () => selectDate(context),
                                   icon:
                                       Image.asset("assets/icons/calendar.png"))
                             ],
@@ -270,44 +277,47 @@ class _UbahPageState extends State<UbahPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        showDialog(
-                            context: context,
-                            builder: (_) => const CustomLoading());
-                        await Future.delayed(const Duration(seconds: 1));
-                        await rekap.ubahRekap(
-                          idHarian: widget.content.id,
-                          tanggal: selectedDate,
-                          pendapatan: int.parse(controller1.text),
-                          pengeluaran: int.parse(controller2.text),
-                          ulasan: controller4.text,
-                          jumlahJual: int.parse(controller3.text),
-                          idRekap: widget.idRekap,
-                        );
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BulanPage()),
-                          (route) => false,
-                        ).then(
-                          (value) => setState(() {
-                            rekap.getRekapBulan();
-                          }),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Ubah Data',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    )
+                    (context.read<UserProvider>().getUser.isOwner)
+                        ? const SizedBox()
+                        : ElevatedButton(
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => const CustomLoading());
+                              await Future.delayed(const Duration(seconds: 1));
+                              await rekap.ubahRekap(
+                                idHarian: widget.content.id,
+                                tanggal: selectedDate,
+                                pendapatan: int.parse(controller1.text),
+                                pengeluaran: int.parse(controller2.text),
+                                ulasan: controller4.text,
+                                jumlahJual: int.parse(controller3.text),
+                                idRekap: widget.idRekap,
+                              );
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const BulanPage()),
+                                (route) => false,
+                              ).then(
+                                (value) => setState(() {
+                                  rekap.getRekapBulan();
+                                }),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              'Ubah Data',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          )
                   ],
                 ),
               ),

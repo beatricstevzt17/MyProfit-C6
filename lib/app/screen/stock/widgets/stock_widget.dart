@@ -10,16 +10,19 @@ import 'package:aplikasi/app/screen/stock/widgets/update_stock.dart';
 
 class StockWidget extends StatelessWidget {
   const StockWidget({required this.konten, Key? key}) : super(key: key);
-  
+
   final StockModel konten;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      margin: const EdgeInsets.fromLTRB(20, 10, 20, 5),
       width: MediaQuery.of(context).size.width * 2,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xA9B2E5FF),
+      ),
       // height: MediaQuery.of(context).size.height * 0.1,
-      color: const Color(0xA9B2E5FF),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -41,6 +44,9 @@ class StockWidget extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.15,
                 decoration: BoxDecoration(
                   color: Colors.blue,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10)),
                   image: DecorationImage(
                       image: NetworkImage(konten.gambar), fit: BoxFit.cover),
                 ),

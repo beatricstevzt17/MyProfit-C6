@@ -3,7 +3,9 @@ import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/hari/ubah_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../../../controllers/user_provider.dart';
 import '../../loading/loading.dart';
 
 //memanggil kerangka hari :
@@ -54,49 +56,52 @@ class Hari extends StatelessWidget {
                   ),
                   //b) text bulan
                   Text(
-                    DateFormat("EEEE, dd MM yyyy", "in_ID")
+                    DateFormat("EEEE, dd MMMM yyyy", "in_ID")
                         .format(content.tanggalBuat),
                     style: const TextStyle(fontSize: 20),
                   )
                 ],
               ),
               //2) konten 2 : icon delete
-              Transform.scale(
-                scale: 0.7,
-                child: IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (_) => AlertDialog(
-                          title: const Text("Perhatian!"),
-                          content: Text(
-                            "Apakah anda yakin ingin menghapus rekap ${DateFormat('d').format(content.tanggalBuat)} ${DateFormat('MMMM').format(content.tanggalBuat)} ${content.tanggalBuat.year}",
-                          ),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Tidak"),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => const CustomLoading());
-                                rekap.deleteRekap(idHarian: content.id);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Ya"),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    icon: Image.asset("assets/icons/delete.png")),
-              ),
+              (context.read<UserProvider>().getUser.isOwner)
+                  ? const SizedBox()
+                  : Transform.scale(
+                      scale: 0.7,
+                      child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) => AlertDialog(
+                                title: const Text("Perhatian!"),
+                                content: Text(
+                                  "Apakah anda yakin ingin menghapus rekap ${DateFormat('d').format(content.tanggalBuat)} ${DateFormat('MMMM').format(content.tanggalBuat)} ${content.tanggalBuat.year}",
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Tidak"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              const CustomLoading());
+                                      rekap.deleteRekap(idHarian: content.id);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Ya"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          icon: Image.asset("assets/icons/delete.png")),
+                    ),
             ],
           ),
         ),

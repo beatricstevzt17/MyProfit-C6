@@ -18,14 +18,17 @@ class UserProvider with ChangeNotifier {
   }
 
 ////////////////////////////////// METHOD UPDATE USER //////////////////////////////////
-  Future<void> updateUser({String? username, String? userId, String? image}) async {
+  Future<void> updateUser(
+      {String? username, String? userId, String? image}) async {
     await FirebaseFirestore.instance.collection("users").doc(userId).update(
-      {"username": username,
-      "image" : image,
+      {
+        "username": username,
+        "image": image,
       },
     );
     final data =
         await FirebaseFirestore.instance.collection("users").doc(userId).get();
     setUser = UserModel.fromJson(data.data()!);
+    notifyListeners();
   }
 }

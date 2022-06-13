@@ -1,4 +1,5 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
+import 'package:aplikasi/app/controllers/user_provider.dart';
 import 'package:aplikasi/app/models/rekap_models.dart';
 import 'package:aplikasi/app/screen/bulan/bulan.dart';
 import 'package:aplikasi/app/screen/hari/hari.dart';
@@ -17,6 +18,7 @@ class Bulan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rekap = Provider.of<RekapController>(context, listen: false);
+
     return Container(
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       width: MediaQuery.of(context).size.width * 1,
@@ -59,52 +61,56 @@ class Bulan extends StatelessWidget {
                 ],
               ),
               //2) konten 2 : icon delete
-              Transform.scale(
-                scale: 0.7,
-                child: IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (_) => AlertDialog(
-                          title: const Text("Perhatian!"),
-                          content: Text(
-                            "Apakah anda yakin ingin menghapus rekap ${DateFormat('MMMM').format(content.tanggal)} ${content.tanggal.year}",
-                          ),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Tidak"),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => const CustomLoading());
-                                rekap
-                                    .deleteRekapBulanan(
-                                        rekapId: content.idRekap)
-                                    .then(
-                                  (value) {
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => const BulanPage()),
-                                      (route) => false,
-                                    );
-                                  },
-                                );
-                              },
-                              child: const Text("Ya"),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    icon: Image.asset("assets/icons/delete.png")),
-              ),
+              (context.read<UserProvider>().getUser.isOwner)
+                  ? const SizedBox()
+                  : Transform.scale(
+                      scale: 0.7,
+                      child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) => AlertDialog(
+                                title: const Text("Perhatian!"),
+                                content: Text(
+                                  "Apakah anda yakin ingin menghapus rekap ${DateFormat('MMMM').format(content.tanggal)} ${content.tanggal.year}",
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Tidak"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) =>
+                                              const CustomLoading());
+                                      rekap
+                                          .deleteRekapBulanan(
+                                              rekapId: content.idRekap)
+                                          .then(
+                                        (value) {
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const BulanPage()),
+                                            (route) => false,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Text("Ya"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          icon: Image.asset("assets/icons/delete.png")),
+                    ),
             ],
           ),
         ),

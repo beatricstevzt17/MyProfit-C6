@@ -31,6 +31,7 @@ class Auth {
               email: email,
               password: password,
               image: profile,
+              isOwner: false,
               createAt: date,
               updateAt: date)
           .toJson());
@@ -58,7 +59,7 @@ class Auth {
 
     final userData = UserModel.fromJson(user.docs.first.data());
     userProvider?.setUser = userData;
-    
+
     final pref = await SharedPreferences.getInstance();
     pref.setString("id", userData.userId);
 
