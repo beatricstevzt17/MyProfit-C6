@@ -22,45 +22,30 @@ class Bulan extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       width: MediaQuery.of(context).size.width * 1,
-      height: MediaQuery.of(context).size.height * 0.08,
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: Colors.grey,
-          ),
-        ),
-      ),
+      height: MediaQuery.of(context).size.height * 0.12,
+      decoration: const BoxDecoration(),
       //agar bisa di klik :
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: (() => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => HariPage(
-                      idRekap: content.idRekap, dateTime: content.tanggal),
-                ),
-              )),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              //1) konten ke 1 : ROW (icon & text bulan)
-              Row(
-                children: <Widget>[
-                  //a) Icon
-                  Transform.scale(
-                    scale: 0.5,
-                    child: Image.asset("assets/icons/calendar.png"),
-                  ),
-                  //b) text bulan
-                  Text(
-                    DateFormat("MMMM yyyy", "in_ID").format(content.tanggal),
-                    style: const TextStyle(fontSize: 20),
-                  )
-                ],
+      child: GestureDetector(
+        onTap: (() => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => HariPage(
+                    idRekap: content.idRekap, dateTime: content.tanggal),
               ),
-              //2) konten 2 : icon delete
+            )),
+        child: Card(
+          child: Row(
+            children: <Widget>[
+              //a) Icon
+              Transform.scale(
+                scale: 0.5,
+                child: Image.asset("assets/icons/calendar.png"),
+              ),
+              //b) text bulan
+              Text(
+                DateFormat("MMMM yyyy", "in_ID").format(content.tanggal),
+                style: const TextStyle(fontSize: 20),
+              ),
               (context.read<UserProvider>().getUser.isOwner)
                   ? const SizedBox()
                   : Transform.scale(

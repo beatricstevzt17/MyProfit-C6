@@ -1,5 +1,6 @@
 import 'package:aplikasi/app/controllers/rekap_controller.dart';
 import 'package:aplikasi/app/controllers/user_provider.dart';
+import 'package:aplikasi/app/pdf/page/pdf_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,17 @@ class _GrafikPage2State extends State<GrafikPage2> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF9AD0EC),
         title: const Text("Grafik"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => const PdfPage()));
+            },
+            icon: const Icon(
+              Icons.picture_as_pdf,
+            ),
+          )
+        ],
       ),
       drawer: Drawer(
         child: ListView(children: <Widget>[
@@ -182,17 +194,25 @@ class _GrafikPage2State extends State<GrafikPage2> {
               child: Column(
                 children: [
                   const Text(
-                    "Pendapatan",
-                    style: TextStyle(fontSize: 20),
+                    "PENDAPATAN",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 5),
                     height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: const Color.fromARGB(255, 207, 255, 209),
+                    ),
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: List.generate(12, (index) {
                         int pend = rekap.dataPendapatan[index + 1];
-                        int pend2 = rekap.dataPendapatan[index];
                         return GestureDetector(
                           onTap: () {
                             if (index == 0) {
@@ -252,13 +272,6 @@ class _GrafikPage2State extends State<GrafikPage2> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                (pend == 0)
-                                    ? const SizedBox()
-                                    : (pend2 == 0)
-                                        ? const Text("0%")
-                                        : Text((((pend - pend2) / pend2) * 100)
-                                                .toStringAsFixed(1) +
-                                            "%"),
                                 Container(
                                   color: (date.month == index + 1)
                                       ? Colors.green
@@ -301,19 +314,27 @@ class _GrafikPage2State extends State<GrafikPage2> {
                       }),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
                   const Text(
-                    "Pengeluaran",
-                    style: TextStyle(fontSize: 20),
+                    "PENGELUARAN",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 5),
                     height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: const Color.fromARGB(255, 207, 245, 255),
+                    ),
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: List.generate(12, (index) {
                         int peng = rekap.dataPengeluaran[index + 1];
-                        int peng2 = rekap.dataPengeluaran[index];
                         return GestureDetector(
                           onTap: () {
                             if (index == 0) {
@@ -373,13 +394,6 @@ class _GrafikPage2State extends State<GrafikPage2> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                (peng == 0)
-                                    ? const SizedBox()
-                                    : (peng2 == 0)
-                                        ? const Text("0%")
-                                        : Text((((peng - peng2) / peng2) * 100)
-                                                .toStringAsFixed(1) +
-                                            "%"),
                                 Container(
                                   color: (date.month == index + 1)
                                       ? Colors.green
@@ -422,16 +436,28 @@ class _GrafikPage2State extends State<GrafikPage2> {
                       }),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   (tempPend == 0)
                       ? const SizedBox()
-                      : Text("Pendapatan: " + tempPend.toString()),
+                      : Text(
+                          "Pendapatan: Rp " + tempPend.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                   (tempPeng == 0)
                       ? const SizedBox()
-                      : Text("Pengeluaran: " + tempPeng.toString()),
+                      : Text(
+                          "Pengeluaran: Rp " + tempPeng.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                   (tempPend == 0 && tempPend == 0)
                       ? const SizedBox()
-                      : Text("Laba: Rp " + ((tempPend - tempPeng)).toString()),
+                      : Text(
+                          "Laba: Rp " + ((tempPend - tempPeng)).toString(),
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold),
+                        ),
                 ],
               ),
             );
